@@ -1,37 +1,43 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Home } from "./components/Home";
 import { About } from "./components/About";
-import { Navbar } from "./shared/Navbar";
-import { Login } from "./components/Auth/Login";
+import { Login } from "./components/auth/Login";
 import { View } from "./components/post/View";
 import { Create } from "./components/post/Create";
 import { Edit } from "./components/post/Edit";
 import { PostProvider } from "./Context/PostContext";
-import { Register } from "./components/Auth/Register";
+import { Register } from "./components/auth/Register";
+import { AuthProvider } from "./Context/AuthContext";
+import ProtectedRoutes from "./utils/ProtectedRoute";
+import { NavbarLayout } from "./shared/layouts/NavbarLayout";
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
-  const queryClient = new QueryClient();
-
   return (
     <div className="h-screen">
-      <QueryClientProvider client={queryClient}>
-        <Router>
+      <Router>
+        <AuthProvider>
           <PostProvider>
-            <Navbar />
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/post/:id" element={<View />} />
-              <Route path="/post/create" element={<Create />} />
-              <Route path="/post/:id/edit" element={<Edit />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route element={<NavbarLayout />}>
+                  <Route path="/post/create" element={<Create />} />
+                  <Route path="/post/:id/edit" element={<Edit />} />
+                </Route>
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+              <Route element={<NavbarLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/post/:id" element={<View />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Route>
             </Routes>
           </PostProvider>
-        </Router>
-      </QueryClientProvider>
+        </AuthProvider>
+      </Router>
     </div>
   );
 }

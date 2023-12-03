@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .formField {
+    @apply mt-6 py-2 border border-gray-300 pl-4 shadow-lg rounded-md;
+  }
+
+  .errorField {
+    @apply mt-2 text-sm text-red-500 ml-2;
+  }
+
+  .submitBtn {
+    @apply bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700;
+  }
+
+  .loader {
+    @apply flex min-h-[5rem] space-x-3 items-center w-11/12 p-4 shadow-xl border border-gray-200 rounded-md;
+  }
+
+  .blog-error {
+    @apply flex min-h-[5rem] items-center font-bold w-11/12 p-4 shadow-xl border border-gray-200 rounded-md;
+  }
+
+  .blog-none {
+    @apply flex items-center min-h-[5rem] font-semibold w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md;
+  }
+
+  .inputField {
+    @apply border border-gray-300 p-2 rounded-lg shadow-md mt-3;
+  }
+}

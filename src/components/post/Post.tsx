@@ -79,7 +79,7 @@ export const Post = (props: Props) => {
               </div>
             </Link>
             <button
-              onClick={() => deletePost(props.id)}
+              onClick={() => deletePost(String(props.id))}
               className="w-full py-2 pl-4 pr-12 hover:bg-red-500 hover:text-white"
             >
               Delete

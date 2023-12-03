@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-interface PostItem {
+export interface PostItem {
   id: number;
   title: string;
   slug: string;
@@ -12,7 +12,7 @@ interface PostItem {
   author: string;
 }
 
-interface formField {
+export interface formField {
   title: string;
   slug: string;
   body: string;
@@ -25,15 +25,15 @@ interface PostContextType {
   isError: boolean;
   formValues: formField;
   retrievePosts: () => void;
-  retrievePost: (id: number) => Promise<void>;
+  retrievePost: (id: string) => Promise<void>;
   storePost: (data: PostItem) => Promise<void>;
-  updatePost: (id: number, data: PostItem) => Promise<void>;
-  deletePost: (id: number) => Promise<void>;
+  updatePost: (id: string, data: PostItem) => Promise<void>;
+  deletePost: (id: string) => Promise<void>;
 }
 
 const PostContext = createContext<PostContextType>({
   posts: [],
-  post: { id: 0, title: "", slug: "", body: "", user_id: 0, author: '' },
+  post: { id: 0, title: "", slug: "", body: "", user_id: 0, author: "" },
   isLoading: false,
   isError: false,
   formValues: {
@@ -48,7 +48,7 @@ const PostContext = createContext<PostContextType>({
   deletePost: async () => {},
 });
 
-const initialValues: any = {
+const initialValues: formField = {
   title: "",
   slug: "",
   body: "",
@@ -63,66 +63,50 @@ export const PostProvider = ({ children }: any) => {
     slug: "",
     body: "",
     user_id: 0,
-    author: '',
+    author: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [formValues, setFormValues] = useState<formField>(initialValues);
 
   const retrievePosts = async () => {
     setIsLoading(true);
-    try {
-      await axios.get("http://127.0.0.1:8000/api/v1/posts").then((res) => {
-        setPosts(res.data.data);
-        setIsLoading(false);
-        setIsError(false);
-      });
-    } catch (errs) {
-      setIsError(true);
+    await axios.get("http://127.0.0.1:8000/api/v1/posts").then((res) => {
+      setPosts(res.data.data);
       setIsLoading(false);
-      console.log(errs);
-    }
+      setIsError(false);
+    });
   };
 
-  const retrievePost = async (id: number) => {
+  const retrievePost = async (id: string) => {
     setIsLoading(true);
     const response = await axios.get(
       `http://127.0.0.1:8000/api/v1/posts/${id}`
     );
-    const apiPost = response.data.data;
-    setPost(apiPost);
-    setFormValues({
-      title: apiPost.title,
-      slug: apiPost.slug,
-      body: apiPost.body,
-    });
+    const data = response.data.data;
+    setPost(data);
     setIsLoading(false);
-    setIsError(false);
+    return data;
   };
 
   const storePost = async (data: PostItem) => {
-    try {
-      await axios.post("http://127.0.0.1:8000/api/v1/posts", data);
+    await axios.post("http://127.0.0.1:8000/api/v1/posts", data).then(() => {
       retrievePosts();
-      setFormValues(initialValues);
       navigate("/");
-    } catch (errs) {
-      setIsError(true);
-    }
+    });
   };
 
-  const updatePost = async (id: number, data: PostItem) => {
-    try {
-      await axios.put(`http://127.0.0.1:8000/api/v1/posts/${id}`, data);
-      retrievePosts();
-      setFormValues(initialValues);
-      navigate("/");
-    } catch (errs) {
-      setIsError(true);
-    }
+  const updatePost = async (id: string, data: PostItem) => {
+    await axios
+      .put(`http://127.0.0.1:8000/api/v1/posts/${id}`, data)
+      .then(() => {
+        retrievePosts();
+        // setFormValues(initialValues);
+        navigate("/");
+      });
   };
 
-  const deletePost = async (id: number) => {
+  const deletePost = async (id: string) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -132,13 +116,12 @@ export const PostProvider = ({ children }: any) => {
       confirmButtonColor: "#d33",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://127.0.0.1:8000/api/v1/posts/${id}`);
-          retrievePosts();
-          navigate("/");
-        } catch (errs) {
-          alert("Bad Request");
-        }
+        await axios
+          .delete(`http://127.0.0.1:8000/api/v1/posts/${id}`)
+          .then(() => {
+            retrievePosts();
+            navigate("/");
+          });
       }
     });
   };

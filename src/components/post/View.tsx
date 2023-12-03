@@ -1,7 +1,7 @@
 import searchIcon from "../../assets/search.svg";
 import placeholder from "../../assets/placeholder.jpg";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostContext from "../../Context/PostContext";
 
 export const View = () => {
@@ -10,7 +10,7 @@ export const View = () => {
   const { post, retrievePost } = useContext(PostContext);
 
   useEffect(() => {
-    retrievePost(parseInt(id!));
+    retrievePost(id!);
   }, []);
 
   return (
@@ -19,9 +19,7 @@ export const View = () => {
         <div className="w-3/4 space-y-4 p-4 shadow-xl rounded-md">
           <img className="w-full" src={placeholder} alt="img" />
           <h1 className="text-3xl">{post.title}</h1>
-          <p>
-            {post.body}
-          </p>
+          <p>{post.body}</p>
           <div className="flex justify-between items-center">
             <p>Author: {post.author}</p>
             <button
