@@ -37,6 +37,7 @@ export const Login = () => {
         .then((res) => {
           setToken(res.data.token);
           setUser(res.data.user);
+          localStorage.setItem("ACCESS_TOKEN", res.data.token);
           navigate("/");
         })
         .catch((error) => {

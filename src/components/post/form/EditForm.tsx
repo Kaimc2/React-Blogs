@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import PostContext from "../../../Context/PostContext";
 import { useContext, useEffect } from "react";
+import AuthContext from "../../../Context/AuthContext";
 
 export const EditForm = (props: any) => {
   const navigate = useNavigate();
   const { updatePost } = useContext(PostContext);
+  const { user } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -32,7 +34,7 @@ export const EditForm = (props: any) => {
   }, [setValue]);
 
   const onSubmit = (data: any) => {
-    updatePost(props.postId, { ...data, user_id: 1 }).catch((error) => {
+    updatePost(props.postId, { ...data, user_id: user.id }).catch((error) => {
       const errors = error.response.data.errors;
       setError("slug", { message: errors.slug });
       setError("title", { message: errors.title });
@@ -74,9 +76,9 @@ export const EditForm = (props: any) => {
         <button
           className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
           type="button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
         >
-          Go Back
+          Cancel
         </button>
         <button
           type="submit"

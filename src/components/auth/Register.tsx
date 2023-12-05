@@ -45,6 +45,7 @@ export const Register = () => {
         console.log("user: " + JSON.stringify(res.data));
         setToken(res.data.token);
         setUser(res.data.user);
+        localStorage.setItem("ACCESS_TOKEN", res.data.token);
         navigate("/");
       })
       .catch((error) => {

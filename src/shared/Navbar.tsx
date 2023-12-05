@@ -23,6 +23,7 @@ export const Navbar = () => {
       .then((res) => {
         console.log(res.data);
         setUser(initialUser);
+        localStorage.removeItem("ACCESS_TOKEN");
         setToken(String(initialToken));
       })
       .catch((err) => console.log(err));
@@ -42,10 +43,10 @@ export const Navbar = () => {
         {token && <NavLink url="/post/create" name="Create" />}
         {token ? (
           <>
+            <NavLink url="/dashboard" name="Dashboard" />
             <li className="hover:bg-blue-500 hover:text-white rounded-md px-3 py-1">
               <button onClick={() => onLogout()}>Logout</button>
             </li>
-            <NavLink url="/dashboard" name="Dashboard" />
           </>
         ) : (
           <NavLink url="/login" name="Login" />

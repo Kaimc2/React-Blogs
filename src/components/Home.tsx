@@ -1,36 +1,26 @@
 import { Post } from "./post/Post";
 import searchIcon from "../assets/search.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import PostContext from "../Context/PostContext";
 import ClipLoader from "react-spinners/ClipLoader";
-// import axios from "axios";
-// import AuthContext from "../Context/AuthContext";
 
 export const Home = () => {
   const { posts, retrievePosts, isLoading, isError } = useContext(PostContext);
-  // const { token } = useContext(AuthContext);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     retrievePosts();
+    // console.log("Session Token: "+String(sessionStorage.getItem('ACCESS_TOKEN')))
   }, []);
 
-  // const http = axios.create({
-  //   baseURL: "http://127.0.0.1:8000/",
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  //   withCredentials: true,
-  // });
-
-  // const getUserInfo = () => {
-  //   http
-  //     .get("api/v1/user")
-  //     .then((res) => {
-  //       console.log("User Info: " + JSON.stringify(res.data));
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const filteredPosts = useMemo(() => {
+    return posts.filter((item) => {
+      return (
+        search.toLowerCase() === "" ||
+        item.title.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+  }, [posts, search]);
 
   return (
     <div className="flex px-10 py-5 space-x-4">
@@ -51,23 +41,19 @@ export const Home = () => {
             <p>Loading...</p>
           </div>
         ) : posts.length > 0 ? (
-          posts
-            .filter((item) => {
-              return search.toLowerCase() === ""
-                ? item
-                : item.title.toLowerCase().includes(search.toLowerCase());
-            })
-            .map((post: any) => {
-              return (
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  slug={post.slug}
-                  author={post.author}
-                />
-              );
-            })
+          filteredPosts.length > 0 ? (
+            filteredPosts.map(({ id, title, slug, author }: any) => (
+              <Post
+                key={id}
+                id={id}
+                title={title}
+                slug={slug}
+                author={author}
+              />
+            ))
+          ) : (
+            <div className="blog-none">No matching post for "{search}"</div>
+          )
         ) : (
           <div className="blog-none">No Data</div>
         )}
@@ -90,13 +76,6 @@ export const Home = () => {
             alt="search"
           />
         </div>
-        {/* <button
-          onClick={() => {
-            getUserInfo();
-          }}
-        >
-          Get User
-        </button> */}
       </div>
     </div>
   );

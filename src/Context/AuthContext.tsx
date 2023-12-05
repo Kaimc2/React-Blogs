@@ -19,15 +19,12 @@ const AuthContext = createContext<AuthField>({
 });
 
 export const initialUser = { id: 0, name: "" };
-export const initialToken = "";
+export const initialToken = localStorage.getItem("ACCESS_TOKEN") ?
+  String(localStorage.getItem("ACCESS_TOKEN")) : "";
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState(initialUser);
-  const [token, _setToken] = useState(initialToken);
-
-  const setToken = (token: string) => {
-    _setToken(token);
-  };
+  const [token, setToken] = useState(initialToken);
 
   return (
     <AuthContext.Provider

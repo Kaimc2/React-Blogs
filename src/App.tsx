@@ -12,6 +12,8 @@ import { AuthProvider } from "./Context/AuthContext";
 import ProtectedRoutes from "./utils/ProtectedRoute";
 import { NavbarLayout } from "./shared/layouts/NavbarLayout";
 import { Dashboard } from "./components/Dashboard";
+import { Page404 } from "./components/errors/Page404";
+import { Page403 } from "./components/errors/Page403";
 
 function App() {
   return (
@@ -23,8 +25,8 @@ function App() {
               <Route element={<ProtectedRoutes />}>
                 <Route element={<NavbarLayout />}>
                   <Route path="/post/create" element={<Create />} />
-                  <Route path="/post/:id/edit" element={<Edit />} />
                 </Route>
+                <Route path="/post/:id/edit" element={<Edit />} />
                 <Route path="/dashboard" element={<Dashboard />} />
               </Route>
               <Route element={<NavbarLayout />}>
@@ -33,6 +35,8 @@ function App() {
                 <Route path="/post/:id" element={<View />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/error/403" element={<Page403 />} />
+                <Route path="*" element={<Page404 />} />
               </Route>
             </Routes>
           </PostProvider>

@@ -5,10 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import PostContext from "../../Context/PostContext";
 import { FormLayout } from "../../shared/layouts/FormLayout";
+import AuthContext from "../../Context/AuthContext";
 
 export const Create = () => {
   const navigate = useNavigate();
   const { storePost } = useContext(PostContext);
+  const { user } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -23,7 +25,7 @@ export const Create = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: any) => {
-    storePost({ ...data, user_id: 1 });
+    storePost({ ...data, user_id: user.id });
   };
 
   return (

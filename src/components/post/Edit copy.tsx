@@ -1,16 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import PostContext, { formField } from "../../Context/PostContext";
 import { EditForm } from "./form/EditForm";
 import BarLoader from "react-spinners/BarLoader";
 import { FormLayout } from "../../shared/layouts/FormLayout";
-import { DashboardLayout } from "../../shared/layouts/DashboardLayout";
-import AuthContext from "../../Context/AuthContext";
 
 export const Edit = () => {
-  const navigate = useNavigate();
   const { post, retrievePost } = useContext(PostContext);
-  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const [postData, setPostData] = useState<formField>();
 
@@ -22,7 +18,6 @@ export const Edit = () => {
         title: data.title,
         slug: data.slug,
         body: data.body,
-        author_id: data.user_id,
       });
     };
 
@@ -44,10 +39,8 @@ export const Edit = () => {
   }
 
   return (
-    <DashboardLayout>
-      <FormLayout>
-        <EditForm postId={id} post={postData} />
-      </FormLayout>
-    </DashboardLayout>
+    <FormLayout>
+      <EditForm postId={id} post={postData} />
+    </FormLayout>
   );
 };

@@ -16,6 +16,7 @@ export interface formField {
   title: string;
   slug: string;
   body: string;
+  author_id: number;
 }
 
 interface PostContextType {
@@ -23,7 +24,6 @@ interface PostContextType {
   post: PostItem;
   isLoading: boolean;
   isError: boolean;
-  formValues: formField;
   retrievePosts: () => void;
   retrievePost: (id: string) => Promise<void>;
   storePost: (data: PostItem) => Promise<void>;
@@ -36,23 +36,12 @@ const PostContext = createContext<PostContextType>({
   post: { id: 0, title: "", slug: "", body: "", user_id: 0, author: "" },
   isLoading: false,
   isError: false,
-  formValues: {
-    title: "",
-    slug: "",
-    body: "",
-  },
   retrievePosts: async () => {},
   retrievePost: async () => {},
   storePost: async () => {},
   updatePost: async () => {},
   deletePost: async () => {},
 });
-
-const initialValues: formField = {
-  title: "",
-  slug: "",
-  body: "",
-};
 
 export const PostProvider = ({ children }: any) => {
   const navigate = useNavigate();
@@ -67,7 +56,6 @@ export const PostProvider = ({ children }: any) => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [formValues, setFormValues] = useState<formField>(initialValues);
 
   const retrievePosts = async () => {
     setIsLoading(true);
@@ -101,8 +89,8 @@ export const PostProvider = ({ children }: any) => {
       .put(`http://127.0.0.1:8000/api/v1/posts/${id}`, data)
       .then(() => {
         retrievePosts();
-        // setFormValues(initialValues);
-        navigate("/");
+        // navigate("/");
+        navigate("/dashboard");
       });
   };
 
@@ -120,7 +108,8 @@ export const PostProvider = ({ children }: any) => {
           .delete(`http://127.0.0.1:8000/api/v1/posts/${id}`)
           .then(() => {
             retrievePosts();
-            navigate("/");
+            // navigate("/");
+            navigate("/dashboard");
           });
       }
     });
@@ -133,7 +122,6 @@ export const PostProvider = ({ children }: any) => {
         post,
         isLoading,
         isError,
-        formValues,
         retrievePosts,
         retrievePost,
         storePost,
