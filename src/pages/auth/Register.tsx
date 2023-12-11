@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import AuthContext from "../../Context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export const Register = () => {
         password_confirmation: data.confirmPassword,
       })
       .then((res) => {
-        console.log("user: " + JSON.stringify(res.data));
+        // console.log("user: " + JSON.stringify(res.data));
         setToken(res.data.token);
         setUser(res.data.user);
         localStorage.setItem("ACCESS_TOKEN", res.data.token);

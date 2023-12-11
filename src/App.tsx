@@ -1,19 +1,21 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "./components/Home";
-import { About } from "./components/About";
-import { Login } from "./components/auth/Login";
-import { View } from "./components/post/View";
-import { Create } from "./components/post/Create";
-import { Edit } from "./components/post/Edit";
-import { PostProvider } from "./Context/PostContext";
-import { Register } from "./components/auth/Register";
-import { AuthProvider } from "./Context/AuthContext";
+import { Toaster } from "react-hot-toast";
+import { Home } from "./pages/Home";
+import { About } from "./pages/About";
+import { Login } from "./pages/auth/Login";
+import { View } from "./pages/post/View";
+import { Create } from "./pages/post/Create";
+import { Edit } from "./pages/post/Edit";
+import { PostProvider } from "./context/PostContext";
+import { Register } from "./pages/auth/Register";
+import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoutes from "./utils/ProtectedRoute";
-import { NavbarLayout } from "./shared/layouts/NavbarLayout";
-import { Dashboard } from "./components/Dashboard";
-import { Page404 } from "./components/errors/Page404";
-import { Page403 } from "./components/errors/Page403";
+import { NavbarLayout } from "./components/Layout/NavbarLayout";
+import { Dashboard } from "./pages/Dashboard";
+import { Page404 } from "./pages/errors/Page404";
+import { Page403 } from "./pages/errors/Page403";
+import { Account } from "./pages/Account";
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
                 <Route element={<NavbarLayout />}>
                   <Route path="/post/create" element={<Create />} />
                 </Route>
+
                 <Route path="/post/:id/edit" element={<Edit />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard/account" element={<Account />} />
               </Route>
               <Route element={<NavbarLayout />}>
                 <Route path="/" element={<Home />} />
@@ -35,10 +39,12 @@ function App() {
                 <Route path="/post/:id" element={<View />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/error/403" element={<Page403 />} />
+                <Route path="/forbidden" element={<Page403 />} />
                 <Route path="*" element={<Page404 />} />
               </Route>
             </Routes>
+
+            <Toaster />
           </PostProvider>
         </AuthProvider>
       </Router>

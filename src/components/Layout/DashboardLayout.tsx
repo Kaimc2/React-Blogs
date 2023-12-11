@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   FormOutlined,
-  // UserOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import reactLogo from "../../assets/react.svg";
 
 export const DashboardLayout = ({ children }: any) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
 
@@ -33,7 +34,9 @@ export const DashboardLayout = ({ children }: any) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={
+            location.pathname === "/dashboard" ? ["1"] : ["2"]
+          }
           items={[
             {
               key: "1",
@@ -41,12 +44,12 @@ export const DashboardLayout = ({ children }: any) => {
               label: "Posts",
               onClick: () => navigate("/dashboard"),
             },
-            // {
-            //   key: "2",
-            //   icon: <UserOutlined />,
-            //   label: "Account",
-            //   onClick: () => navigate("/dashboard"),
-            // },
+            {
+              key: "2",
+              icon: <UserOutlined />,
+              label: "Account",
+              onClick: () => navigate("/dashboard/account"),
+            },
           ]}
         />
       </Sider>

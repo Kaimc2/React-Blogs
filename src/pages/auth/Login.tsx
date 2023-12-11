@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
-import { axiosClient } from "../../axios.client";
+import { axiosClient } from "../../utils/axios.client";
 import { useContext } from "react";
-import AuthContext from "../../Context/AuthContext";
+import AuthContext from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const { setToken, setUser } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
@@ -28,23 +28,18 @@ export const Login = () => {
   });
 
   const onLogin = async (data: any) => {
-    axiosClient.get("sanctum/csrf-cookie").then(() => {
-      axiosClient
-        .post("api/v1/login", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          setToken(res.data.token);
-          setUser(res.data.user);
-          localStorage.setItem("ACCESS_TOKEN", res.data.token);
-          navigate("/");
-        })
-        .catch((error) => {
+    axiosClient
+      .get("sanctum/csrf-cookie")
+      .then(() => {
+        login(data).catch((error) => {
           const errors = error.response.data;
           setError("password", { message: errors.message });
         });
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Login Failed");
+      });
   };
 
   return (
