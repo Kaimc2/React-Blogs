@@ -58,16 +58,17 @@ export const Create = () => {
 
     // console.log(data);
     storePost(formData)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         toast.success("Post created successfully");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         const errors = error.response.data.errors;
         setError("title", { message: errors.title });
         setError("thumbnail", { message: errors.thumbnail[0] });
-        setError("category", { message: "Category is required" });
+        setError("category", {
+          message: errors.category_id && "Category is required",
+        });
       });
   };
 

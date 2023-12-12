@@ -40,4 +40,8 @@
           after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 
           after:transition after:duration-300 after:origin-center;
   }
+
+  .profile-picture {
+    @apply border w-[3rem] h-[3rem] rounded-full;
+  }
 }

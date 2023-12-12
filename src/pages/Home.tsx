@@ -1,4 +1,4 @@
-import { Post } from "./post/Post";
+import { Post } from "../components/Common/Post";
 import searchIcon from "../assets/search.svg";
 import { useContext, useEffect, useMemo, useState } from "react";
 import PostContext from "../context/PostContext";

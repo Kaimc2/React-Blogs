@@ -32,7 +32,9 @@ export const Post = (props: Props) => {
               />
               <p>{props.author}</p>
             </div>
-            <p className="border border-gray-300 shadow-md rounded-full px-3 py-1">{props.category}</p>
+            <p className="border border-gray-300 shadow-md rounded-full px-3 py-1">
+              {props.category}
+            </p>
           </div>
           <h1 className="text-lg font-bold mt-2">{props.title}</h1>
           <p className="text-gray-700">

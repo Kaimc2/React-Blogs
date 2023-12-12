@@ -63,7 +63,7 @@ export const EditForm = (props: Props) => {
     formData.append("thumbnail", data.thumbnail[0]);
     formData.append("author_id", String(props.post.author_id));
     formData.append("_method", "PUT");
-    console.log(data);
+    // console.log(data);
 
     updatePost(props.postId, formData)
       .then(() => {
@@ -74,9 +74,10 @@ export const EditForm = (props: Props) => {
           navigate("/forbidden");
         }
         const errors = error.response.data.errors;
-        console.log(errors);
+        // console.log(errors);
         setError("category", { message: errors.category_id });
         setError("title", { message: errors.title });
+        // setError("title", { message: "Title must be unique" });
       });
   };
 
