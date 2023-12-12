@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { Login } from "./pages/auth/Login";
-import { View } from "./pages/post/View";
+import { View } from "./pages/post/Show";
 import { Create } from "./pages/post/Create";
 import { Edit } from "./pages/post/Edit";
 import { PostProvider } from "./context/PostContext";

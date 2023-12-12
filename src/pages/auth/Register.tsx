@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AuthContext from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ export const Register = () => {
         setUser(res.data.user);
         localStorage.setItem("ACCESS_TOKEN", res.data.token);
         navigate("/");
+        toast.success("Register Successfully")
       })
       .catch((error) => {
         const errors = error.response.data;

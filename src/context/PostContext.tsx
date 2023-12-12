@@ -19,6 +19,7 @@ export interface PostItem {
     author_id: number;
     author: string;
     author_pf: string;
+    comments?: [];
   };
 }
 
@@ -48,10 +49,14 @@ interface PostContextType {
   paginateData: PaginateType;
   retrievePosts: (currentPage: number) => void;
   retrievePost: (id: string) => Promise<void>;
-  storePost: (data: any) => Promise<void>;
-  updatePost: (id: string, data: any) => Promise<void>;
+  storePost: (data: FormData) => Promise<void>;
+  updatePost: (id: string, data: FormData) => Promise<void>;
   deletePost: (id: string) => Promise<void>;
   getCategories: () => void;
+  getComment: (id: number) => Promise<void>;
+  storeComment: (data: FormData) => Promise<void>;
+  updateComment: (id: number, data: FormData) => Promise<void>;
+  deleteComment: (id: number) => Promise<void>;
 }
 
 const PostContext = createContext<PostContextType>({
@@ -76,6 +81,10 @@ const PostContext = createContext<PostContextType>({
   updatePost: async () => {},
   deletePost: async () => {},
   getCategories: async () => {},
+  getComment: async () => {},
+  storeComment: async () => {},
+  updateComment: async () => {},
+  deleteComment: async () => {},
 });
 
 export const PostProvider = ({ children }: any) => {
@@ -166,7 +175,7 @@ export const PostProvider = ({ children }: any) => {
 
   const getCategories = async () => {
     const categories: CategoryType[] = await axiosClient.get(
-      "http://127.0.0.1:8000/api/v1/categories",
+      "api/v1/categories",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -175,6 +184,32 @@ export const PostProvider = ({ children }: any) => {
     );
 
     return categories;
+  };
+
+  const getComment = async (id: number) => {
+    await axiosClient.get(`api/v1/comment/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const storeComment = async (data: FormData) => {
+    await axiosClient.post("api/v1/comment/create", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  };
+
+  const updateComment = async (id: number, data: FormData) => {
+    await axiosClient.post(`api/v1/comment/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  };
+
+  const deleteComment = async (id: number) => {
+    await axiosClient.delete(`api/v1/commen/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   };
 
   return (
@@ -191,6 +226,10 @@ export const PostProvider = ({ children }: any) => {
         updatePost,
         deletePost,
         getCategories,
+        getComment,
+        storeComment,
+        updateComment,
+        deleteComment,
       }}
     >
       {children}
