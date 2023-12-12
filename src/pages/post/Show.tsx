@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { Comment } from "../../components/Common/Comment";
 import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const View = () => {
   const navigate = useNavigate();
@@ -19,10 +21,19 @@ export const View = () => {
     retrievePost(id!).then(() => setIsLoading(false));
   }, [id, editable]);
 
-  const { register, handleSubmit, resetField } = useForm();
+  const schema = yup.object().shape({
+    comment: yup.string().required(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    resetField,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
 
     formData.append("content", data.comment);
@@ -75,7 +86,7 @@ export const View = () => {
         </div>
 
         {/* Comment Section */}
-        <div className="w-full md:w-3/4 p-4 border shadow-lg rounded-md border-gray-300">
+        <div className="w-full md:w-3/4 p-4 bg-white border shadow-lg rounded-md border-gray-300">
           <h1 className="mb-5 text-xl">
             {post.relationships.comments!.length > 0
               ? post.relationships.comments?.length + " Comments"
@@ -96,6 +107,8 @@ export const View = () => {
                 onFocus={() => setEditable(true)}
                 {...register("comment")}
               ></textarea>
+              <p className="errorField">{errors.comment?.message}</p>
+
               {editable && (
                 <div className="flex justify-end space-x-3">
                   <button
@@ -118,11 +131,21 @@ export const View = () => {
 
           {post.relationships.comments!.length > 0 ? (
             post.relationships.comments!.map(
-              ({ comment, commenter, commenter_pf, created_at }) => {
-                // Make a comment component here
+              ({
+                comment_id,
+                comment,
+                commenter_id,
+                commenter,
+                commenter_pf,
+                created_at,
+              }) => {
                 return (
                   <Comment
+                    key={comment_id}
+                    post_id={String(id)}
+                    comment_id={comment_id}
                     content={comment}
+                    commenter_id={commenter_id}
                     commenter={commenter}
                     commenterProfilePicture={commenter_pf}
                     createdAt={created_at}
