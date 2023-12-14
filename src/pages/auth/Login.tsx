@@ -45,7 +45,7 @@ export const Login = () => {
   return (
     <div className="h-3/4 flex justify-center items-center">
       <form
-        className="flex flex-col border w-2/5 p-10 border-gray-200 shadow-lg"
+        className="flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
         onSubmit={handleSubmit(onLogin)}
       >
         <h1 className="text-2xl text-center font-semibold">Login</h1>

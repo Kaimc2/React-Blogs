@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Layout, theme, Space, Table } from "antd";
+import { Layout, Space, Table } from "antd";
 import { Link } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { axiosClient } from "../utils/axios.client";
@@ -20,14 +20,10 @@ interface DataType {
 }
 
 export const Dashboard = () => {
+  const { Content } = Layout;
   const { token } = useContext(AuthContext);
   const { deletePost } = useContext(PostContext);
-  const { Content } = Layout;
   const [posts, setPosts] = useState<DataType[]>();
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   const columns: ColumnsType<PostItem> = [
     {
@@ -76,7 +72,20 @@ export const Dashboard = () => {
             </Link>
             <button
               className="hover:bg-red-500 py-1 px-3 rounded-md hover:text-white"
-              onClick={() => deletePost(id)}
+              onClick={() => {
+                deletePost(id);
+                axiosClient
+                  .get("api/v1/dashboard/posts", {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  })
+                  .then((res) => {
+                    const fetchData = res.data.data;
+                    // console.log(fetchData);
+                    setPosts(fetchData);
+                  });
+              }}
             >
               Delete
             </button>
@@ -98,19 +107,13 @@ export const Dashboard = () => {
         // console.log(fetchData);
         setPosts(fetchData);
       });
-  }, [setPosts]);
+  }, [posts]);
 
   return (
     <DashboardLayout>
-      <Content
-        style={{
-          margin: "24px 16px",
-          padding: 24,
-          minHeight: 280,
-          background: colorBgContainer,
-        }}
-      >
+      <Content>
         <Table
+          className="overflow-scroll"
           rowKey={(post) => post.title}
           columns={columns}
           dataSource={posts?.map((item) => item.post)}

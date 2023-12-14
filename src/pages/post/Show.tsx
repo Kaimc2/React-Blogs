@@ -32,7 +32,7 @@ export const View = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: any) => {
+  const onComment = (data: any) => {
     // console.log(data);
     const formData = new FormData();
 
@@ -54,16 +54,16 @@ export const View = () => {
   }
 
   return (
-    <div className="flex justify-center px-10 py-5 space-x-4">
+    <div className="flex justify-center sm:px-10 py-5 space-x-4">
       <div className="flex flex-col items-center w-full md:w-3/4 space-y-5">
         <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300">
           <img
-            className="w-full"
+            className="w-full max-h-[40rem]"
             src={import.meta.env.VITE_BACKEND_URL + post.post.thumbnail}
-            alt="img"
+            alt="thumbnail"
           />
           <h1 className="text-3xl">{post.post.title}</h1>
-          <p>{post.post.body}</p>
+          <div>{post.post.body}</div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img
@@ -74,7 +74,10 @@ export const View = () => {
                 }
                 alt="profile"
               />
-              <p>{post.relationships.author}</p>
+              <span>
+                <p className="text-sm">Author</p>
+                <p>{post.relationships.author}</p>
+              </span>
             </div>
             <button
               onClick={() => navigate("/")}
@@ -100,33 +103,42 @@ export const View = () => {
               }
               alt="profile"
             />
-            <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-              <textarea
-                className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300"
-                placeholder="Add a comment..."
-                onFocus={() => setEditable(true)}
-                {...register("comment")}
-              ></textarea>
-              <p className="errorField">{errors.comment?.message}</p>
+            {user.id !== 0 ? (
+              <form className="w-full" onSubmit={handleSubmit(onComment)}>
+                <textarea
+                  className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300"
+                  placeholder="Add a comment..."
+                  onFocus={() => setEditable(true)}
+                  {...register("comment")}
+                ></textarea>
+                <p className="errorField">{errors.comment?.message}</p>
 
-              {editable && (
-                <div className="flex justify-end space-x-3">
-                  <button
-                    className="submitBtn"
-                    type="button"
-                    onClick={() => {
-                      setEditable(false);
-                      resetField("comment");
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button className="submitBtn" type="submit">
-                    Comment
-                  </button>
-                </div>
-              )}
-            </form>
+                {editable && (
+                  <div className="flex justify-end space-x-3">
+                    <button
+                      className="submitBtn"
+                      type="button"
+                      onClick={() => {
+                        setEditable(false);
+                        resetField("comment");
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button className="submitBtn" type="submit">
+                      Comment
+                    </button>
+                  </div>
+                )}
+              </form>
+            ) : (
+              <button
+                onClick={() => navigate("/login")}
+                className="hover:underline"
+              >
+                Sign in to comment
+              </button>
+            )}
           </div>
 
           {post.relationships.comments!.length > 0 ? (
@@ -155,7 +167,7 @@ export const View = () => {
             )
           ) : (
             <div className="mt-3 border border-gray-300 rounded-md shadow-lg w-full p-2 text-lg">
-              No comments. Be the first one!
+              Be the first one!
             </div>
           )}
         </div>

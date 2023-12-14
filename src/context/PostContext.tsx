@@ -47,7 +47,15 @@ interface PostContextType {
   isLoading: boolean;
   isError: boolean;
   paginateData: PaginateType;
-  retrievePosts: (currentPage: number) => void;
+  search: string;
+  category: string;
+  updateSearch: (newSearch: string) => void;
+  updateSelectedCategory: (newCategory: string) => void;
+  retrievePosts: (
+    currentPage: number,
+    search: string,
+    category: string
+  ) => void;
   retrievePost: (id: string) => Promise<void>;
   storePost: (data: FormData) => Promise<void>;
   updatePost: (id: string, data: FormData) => Promise<void>;
@@ -74,6 +82,10 @@ const PostContext = createContext<PostContextType>({
   isLoading: false,
   isError: false,
   paginateData: { links: {}, meta: {} },
+  search: "",
+  category: "",
+  updateSearch: () => {},
+  updateSelectedCategory: () => {},
   retrievePosts: async () => {},
   retrievePost: async () => {},
   storePost: async () => {},
@@ -102,16 +114,32 @@ export const PostProvider = ({ children }: any) => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
   const [paginateData, setPaginateData] = useState<PaginateType>({
     links: {},
     meta: {},
   });
 
-  const retrievePosts = async (currentPage: number) => {
+  const updateSearch = (newSearch: string) => {
+    setSearch(newSearch);
+  };
+
+  const updateSelectedCategory = (newCategory: string) => {
+    setCategory(newCategory);
+  };
+
+  const retrievePosts = async (
+    currentPage: number,
+    search: string,
+    category: string
+  ) => {
     setIsLoading(true);
 
     await axios
-      .get(`http://127.0.0.1:8000/api/v1/posts?page=${currentPage}`)
+      .get(
+        `http://127.0.0.1:8000/api/v1/posts?page=${currentPage}&search=${search}&category=${category}`
+      )
       .then((res) => {
         setPosts(res.data.data);
         setPaginateData({ links: res.data.links, meta: res.data.meta });
@@ -136,7 +164,7 @@ export const PostProvider = ({ children }: any) => {
 
   const storePost = async (data: FormData) => {
     await axios.post("http://127.0.0.1:8000/api/v1/posts", data).then(() => {
-      retrievePosts(1);
+      retrievePosts(1, "", "");
       navigate("/");
     });
   };
@@ -145,7 +173,7 @@ export const PostProvider = ({ children }: any) => {
     await axios
       .post(`http://127.0.0.1:8000/api/v1/posts/${id}`, data)
       .then(() => {
-        retrievePosts(1);
+        retrievePosts(1, "", "");
         navigate("/dashboard");
       });
   };
@@ -163,7 +191,7 @@ export const PostProvider = ({ children }: any) => {
         await axios
           .delete(`http://127.0.0.1:8000/api/v1/posts/${id}`)
           .then(() => {
-            retrievePosts(1);
+            retrievePosts(1, "", "");
             navigate("/dashboard");
             toast.success("Post deleted successfully");
           });
@@ -173,12 +201,7 @@ export const PostProvider = ({ children }: any) => {
 
   const getCategories = async () => {
     const categories: CategoryType[] = await axiosClient.get(
-      "api/v1/categories",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      "api/v1/categories"
     );
 
     return categories;
@@ -227,6 +250,10 @@ export const PostProvider = ({ children }: any) => {
         isLoading,
         isError,
         paginateData,
+        search,
+        category,
+        updateSearch,
+        updateSelectedCategory,
         retrievePosts,
         retrievePost,
         storePost,
