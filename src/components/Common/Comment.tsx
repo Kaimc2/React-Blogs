@@ -67,7 +67,7 @@ export const Comment = (props: Props) => {
         setIsHovered(false);
         setIsToggle(false);
       }}
-      className="flex my-5"
+      className="flex my-2 py-5"
     >
       <img
         className="profile-picture"
@@ -89,7 +89,7 @@ export const Comment = (props: Props) => {
               className={
                 !isHovered
                   ? "md:hidden"
-                  : "absolute right-3 top-0 hover:cursor-pointer"
+                  : "absolute right-0 top-0 hover:cursor-pointer"
               }
             >
               <div className="relative">
