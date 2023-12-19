@@ -5,7 +5,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PostContext from "../../context/PostContext";
 import toast from "react-hot-toast";
-import { VscTrash, VscEdit, VscKebabVertical } from "react-icons/vsc";
+import { VscTrash, VscEdit } from "react-icons/vsc";
+import { RiMore2Fill, RiThumbDownLine, RiThumbUpLine } from "react-icons/ri";
 
 interface Props {
   post_id: string;
@@ -93,7 +94,7 @@ export const Comment = (props: Props) => {
               }
             >
               <div className="relative">
-                <VscKebabVertical />
+                <RiMore2Fill />
                 <div
                   className={
                     !isToggle
@@ -161,11 +162,11 @@ export const Comment = (props: Props) => {
               id="comment"
               {...register("comment")}
             ></textarea>
-            <p className="errorField">{errors.comment?.message}</p>
+            <p className="error-field">{errors.comment?.message}</p>
 
             <div className="flex justify-end space-x-2">
               <button
-                className="submitBtn"
+                className="submit-btn"
                 type="button"
                 onClick={() => {
                   setIsEdit(false);
@@ -174,12 +175,22 @@ export const Comment = (props: Props) => {
               >
                 Cancel
               </button>
-              <button className="submitBtn" type="submit">
+              <button className="submit-btn" type="submit">
                 Update
               </button>
             </div>
           </form>
         )}
+
+        <div className="flex mt-3 space-x-3">
+          <button className="flex items-center space-x-1" title="Like">
+            <RiThumbUpLine />
+            <p className="text-sm">10</p>
+          </button>
+          <button title="Dislike">
+            <RiThumbDownLine />
+          </button>
+        </div>
       </div>
     </div>
   );

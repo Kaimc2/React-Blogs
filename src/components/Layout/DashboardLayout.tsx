@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   MenuFoldOutlined,
@@ -8,16 +8,45 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import reactLogo from "../../assets/react.svg";
+import AuthContext from "../../context/AuthContext";
 
 export const DashboardLayout = ({ children }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const isAdmin = user.name === "Admin" && user.id === 1;
+
+  const menuItems = [
+    {
+      key: "1",
+      icon: <FormOutlined />,
+      label: "Posts",
+      onClick: () => navigate("/dashboard"),
+    },
+    {
+      key: "2",
+      icon: <UserOutlined />,
+      label: "Categoy",
+      onClick: () => navigate("/dashboard/categories"),
+    },
+    {
+      key: "3",
+      icon: <UserOutlined />,
+      label: "Account",
+      onClick: () => navigate("/dashboard/account"),
+    },
+  ];
+
+  const filteredMenuItems = isAdmin
+    ? menuItems
+    : menuItems.filter((item) => item.key !== "2");
 
   return (
     <Layout className="w-full h-full">
@@ -35,22 +64,13 @@ export const DashboardLayout = ({ children }: any) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={
-            location.pathname === "/dashboard" ? ["1"] : ["2"]
+            location.pathname === "/dashboard"
+              ? ["1"]
+              : location.pathname === "/dashboard/categories"
+              ? ["2"]
+              : ["3"]
           }
-          items={[
-            {
-              key: "1",
-              icon: <FormOutlined />,
-              label: "Posts",
-              onClick: () => navigate("/dashboard"),
-            },
-            {
-              key: "2",
-              icon: <UserOutlined />,
-              label: "Account",
-              onClick: () => navigate("/dashboard/account"),
-            },
-          ]}
+          items={filteredMenuItems}
         />
       </Sider>
       <Layout>

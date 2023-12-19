@@ -5,11 +5,13 @@ export const NavLink = (props: any) => {
 
   return (
     <li
-      onClick={() => props.onBtnClick(false)}
+      onClick={() => {
+        props.onBtnClick ? props.onBtnClick(false) : {};
+      }}
       className={
         location.pathname === props.url
-          ? "navbarBtn after:scale-100"
-          : "navbarBtn"
+          ? "navbar-btn after:scale-100"
+          : "navbar-btn"
       }
     >
       <Link to={props.url}>{props.name}</Link>

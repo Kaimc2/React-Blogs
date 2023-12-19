@@ -109,15 +109,15 @@ export const Account = () => {
                   <div className="absolute border mt-1 p-1">Change Profile</div>
                 </span>
               </label>
-              <p className="errorField">{errors.profile?.message}</p>
+              <p className="error-field">{errors.profile?.message}</p>
 
               <input
-                className="inputField"
+                className="input-field"
                 placeholder="Name..."
                 {...register("name")}
                 // required
               ></input>
-              <p className="errorField">{errors.name?.message}</p>
+              <p className="error-field">{errors.name?.message}</p>
 
               <button type="submit">Update</button>
             </form>

@@ -4,3 +4,41 @@
   box-sizing: border-box;
   font-family: monospace, sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: #bababa;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Display placeholder for Text Editor */
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap h1 {
+  font-size: x-large;
+}

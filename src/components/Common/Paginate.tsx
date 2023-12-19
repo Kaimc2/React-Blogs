@@ -8,7 +8,7 @@ const Paginate = (props: Props) => {
   return (
     <div className="space-x-5">
       <button
-        className="paginateBtn"
+        className="paginate-btn"
         onClick={() => props.handlePageChange(props.currentPage - 1)}
         disabled={props.currentPage === 1}
       >
@@ -18,7 +18,7 @@ const Paginate = (props: Props) => {
         {props.currentPage} / {props.totalPages}
       </span>
       <button
-        className="paginateBtn"
+        className="paginate-btn"
         onClick={() => props.handlePageChange(props.currentPage + 1)}
         disabled={props.currentPage === props.totalPages}
       >
@@ -32,7 +32,7 @@ const Paginate = (props: Props) => {
 //     paginateData.meta.links.map((item: any) =>
 //       item.label == "&laquo; Previous" ? (
 //         <button
-//           className="paginateBtn"
+//           className="paginate-btn"
 //           onClick={() => handlePageChange(currentPage - 1)}
 //           disabled={currentPage === 1}
 //         >
@@ -40,7 +40,7 @@ const Paginate = (props: Props) => {
 //         </button>
 //       ) : item.label == "Next &raquo;" ? (
 //         <button
-//           className="paginateBtn"
+//           className="paginate-btn"
 //           onClick={() => handlePageChange(currentPage + 1)}
 //           disabled={currentPage === totalPages}
 //         >

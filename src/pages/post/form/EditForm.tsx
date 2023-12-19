@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import PostContext, {
   CategoryType,
@@ -8,6 +8,7 @@ import PostContext, {
 } from "../../../context/PostContext";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { TextEditor } from "../../../components/Common/TextEditor";
 
 interface Props {
   postId: string;
@@ -38,10 +39,12 @@ export const EditForm = (props: Props) => {
   };
 
   const {
+    control,
     register,
     handleSubmit,
     setValue,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -90,14 +93,14 @@ export const EditForm = (props: Props) => {
       <h1 className="text-2xl text-center font-semibold">Edit Post</h1>
 
       <input
-        className="inputField"
+        className="input-field"
         type="text"
         placeholder="Title..."
         {...register("title")}
       />
-      <p className="errorField">{errors.title?.message}</p>
+      <p className="error-field">{errors.title?.message}</p>
 
-      <select className="formField" {...register("category")}>
+      <select className="form-field" {...register("category")}>
         <option value="">Pick a category</option>
         {props.categories &&
           props.categories.map((category) => {
@@ -108,14 +111,28 @@ export const EditForm = (props: Props) => {
             );
           })}
       </select>
-      <p className="errorField">{errors.category?.message}</p>
+      <p className="error-field">{errors.category?.message}</p>
 
-      <textarea
-        className=" min-h-[3rem] inputField"
+      {/* <textarea
+        className=" min-h-[3rem] input-field"
         placeholder="Body..."
         {...register("body")}
       />
-      <p className="errorField">{errors.body?.message}</p>
+      <p className="error-field">{errors.body?.message}</p> */}
+
+      <Controller
+        control={control}
+        name="body"
+        render={({ field: { onChange } }) => (
+          <TextEditor
+            body={props.post.body}
+            onChange={onChange}
+            setError={setError}
+            clearErrors={clearErrors}
+          />
+        )}
+      />
+      <p className="error-field">{errors.body?.message}</p>
 
       {/* Thumbnail Input */}
       <label htmlFor="thumbnail" className="mt-3">
@@ -150,7 +167,7 @@ export const EditForm = (props: Props) => {
           Upload Thumbnail
         </button>
       </label>
-      <p className="errorField">{errors.thumbnail?.message}</p>
+      <p className="error-field">{errors.thumbnail?.message}</p>
 
       {/* Action */}
       <div className="flex justify-end space-x-2 mt-3">

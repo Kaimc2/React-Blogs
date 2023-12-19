@@ -8,6 +8,8 @@ import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 
 export const View = () => {
   const navigate = useNavigate();
@@ -49,42 +51,34 @@ export const View = () => {
       .catch((error) => console.log(error));
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex justify-center sm:px-10 py-5 space-x-4">
       <div className="flex flex-col items-center w-full md:w-3/4 space-y-5">
         <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300">
+          <h1 className="text-3xl font-bold">{post.post.title}</h1>
+          <div className="flex items-center space-x-3">
+            <img
+              className="profile-picture"
+              src={
+                import.meta.env.VITE_BACKEND_URL + post.relationships.author_pf
+              }
+              alt="profile"
+            />
+            <span>
+              <p>{post.relationships.author} </p>
+              <p>Published on {post.post.createdAt}</p>
+            </span>
+          </div>
+
           <img
             className="w-full max-h-[40rem]"
             src={import.meta.env.VITE_BACKEND_URL + post.post.thumbnail}
             alt="thumbnail"
           />
-          <h1 className="text-3xl">{post.post.title}</h1>
-          <div>{post.post.body}</div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <img
-                className="profile-picture"
-                src={
-                  import.meta.env.VITE_BACKEND_URL +
-                  post.relationships.author_pf
-                }
-                alt="profile"
-              />
-              <span>
-                <p className="text-sm">Author</p>
-                <p>{post.relationships.author}</p>
-              </span>
-            </div>
-            <button
-              onClick={() => navigate("/")}
-              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 hover:-translate-y-1 transition ease-in-out duration-300 hover:scale-105 hover:shadow-lg"
-            >
-              Go Back
-            </button>
+          <div className="text-editor">
+            {parse(DOMPurify.sanitize(post.post.body))}
           </div>
         </div>
 
@@ -99,7 +93,9 @@ export const View = () => {
             <img
               className="profile-picture mr-5"
               src={
-                import.meta.env.VITE_BACKEND_URL + post.relationships.author_pf
+                user.profile
+                ? import.meta.env.VITE_BACKEND_URL + user.profile
+                : import.meta.env.VITE_BACKEND_URL + "storage/profiles/pf.png"
               }
               alt="profile"
             />
@@ -111,12 +107,12 @@ export const View = () => {
                   onFocus={() => setEditable(true)}
                   {...register("comment")}
                 ></textarea>
-                <p className="errorField">{errors.comment?.message}</p>
+                <p className="error-field">{errors.comment?.message}</p>
 
                 {editable && (
                   <div className="flex justify-end space-x-3">
                     <button
-                      className="submitBtn"
+                      className="submit-btn"
                       type="button"
                       onClick={() => {
                         setEditable(false);
@@ -125,7 +121,7 @@ export const View = () => {
                     >
                       Cancel
                     </button>
-                    <button className="submitBtn" type="submit">
+                    <button className="submit-btn" type="submit">
                       Comment
                     </button>
                   </div>

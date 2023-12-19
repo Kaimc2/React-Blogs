@@ -57,50 +57,50 @@ export const Register = () => {
   };
 
   return (
-    <div className="h-3/4 flex justify-center items-center">
+    <div className="h-[47.5rem] flex justify-center items-center">
       <form
         className="flex flex-col border w-[26rem] md:w-2/5 p-10 border-gray-200 shadow-lg"
         onSubmit={handleSubmit(onRegister)}
       >
         <h1 className="text-2xl text-center font-semibold">Register</h1>
         <input
-          className="formField"
+          className="form-field"
           type="text"
           id="name"
           placeholder="Name"
           {...register("name")}
         />
-        <p className="errorField">{errors.name?.message}</p>
+        <p className="error-field">{errors.name?.message}</p>
         <input
-          className="formField"
+          className="form-field"
           type="email"
           id="email"
           placeholder="Email"
           {...register("email")}
         />
-        <p className="errorField">{errors.email?.message}</p>
+        <p className="error-field">{errors.email?.message}</p>
         <input
-          className="formField"
+          className="form-field"
           type="password"
           id="password"
           placeholder="Password"
           {...register("password")}
         />
-        <p className="errorField">{errors.password?.message}</p>
+        <p className="error-field">{errors.password?.message}</p>
         <input
-          className="formField"
+          className="form-field"
           type="password"
           id="confirmPassword"
           placeholder="Confirm Password"
           {...register("confirmPassword")}
         />
-        <p className="errorField">{errors.confirmPassword?.message}</p>
-        <button className="mt-6 submitBtn" type="submit">
+        <p className="error-field">{errors.confirmPassword?.message}</p>
+        <button className="mt-6 submit-btn" type="submit">
           Register
         </button>
         <div className="flex justify-center space-x-2 mt-6 items-center">
           <p>Have an account?</p>
-          <Link to={"/login"} className={"text-blue-500 hover:text-blue-700"}>
+          <Link to={"/login"} className={"text-blue-500 hover:text-blue-700 hover:underline"}>
             Sign In
           </Link>
         </div>

@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 
 interface Props {
   id: number;
@@ -18,17 +20,18 @@ export const Post = (props: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md relative hover:-translate-y-1 transition-all ease-in-out">
+    <div className="post">
       <div
         title="Read more"
         onClick={() => navigate("/post/" + props.id)}
-        className="space-y-4 md:flex md:space-x-4 hover:cursor-pointer"
+        className="md:flex space-y-4 md:space-y-0 md:space-x-4 md:max-h-[10rem] overflow-hidden hover:cursor-pointer"
       >
         <img
           className="w-full h-[18rem] md:w-1/5 md:h-40"
           src={ENV + props.thumbnail}
           alt="img"
         />
+
         <div className="md:w-4/5">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
@@ -58,12 +61,13 @@ export const Post = (props: Props) => {
               )}
             </p>
           </div>
-          <h1 className="text-lg font-bold mt-2">{props.title}</h1>
-          <p className="mt-2 md:mt-0 text-gray-700">
+
+          <h1 className="text-lg font-bold my-2">{props.title}</h1>
+          <div className="mt-2 md:mt-0 text-gray-700">
             {props.body.length > 50
-              ? props.body.slice(0, 300) + "..."
-              : props.body}
-          </p>
+              ? parse(DOMPurify.sanitize(props.body.slice(0, 200)) + "...")
+              : parse(DOMPurify.sanitize(props.body))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import PostContext, { CategoryType, formField } from "../../context/PostContext";
+import PostContext, {
+  CategoryType,
+  formField,
+} from "../../context/PostContext";
 import { EditForm } from "./form/EditForm";
 import { FormLayout } from "../../components/Layout/FormLayout";
 import { DashboardLayout } from "../../components/Layout/DashboardLayout";
@@ -8,15 +11,23 @@ import AuthContext from "../../context/AuthContext";
 import { Loader } from "../../components/Common/Loading";
 
 export const Edit = () => {
-  const { retrievePost, getCategories } = useContext(PostContext);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { retrievePost, getCategories } = useContext(PostContext);
   const [postData, setPostData] = useState<formField>();
   const { user, authorize } = useContext(AuthContext);
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data: any = await retrievePost(String(id));
+      const data: any = await retrievePost(String(id)).catch((error) => {
+        if (error.response.status === 404) {
+          navigate("/*");
+        }
+      });
+
+      if (!data) return;
+
       const response: any = await getCategories();
       // console.log(data);
 
@@ -34,9 +45,7 @@ export const Edit = () => {
     fetchData();
   }, [id]);
 
-  if (!postData) {
-    return <Loader />;
-  }
+  if (!postData) return <Loader />;
 
   authorize(user.id, postData.author_id);
 
