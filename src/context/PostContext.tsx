@@ -14,6 +14,7 @@ export interface PostItem {
     category: string;
     category_id: string;
     body: string;
+    createdAt: string;
   };
   relationships: {
     author_id: number;
@@ -76,6 +77,7 @@ const PostContext = createContext<PostContextType>({
       category: "",
       category_id: "",
       body: "",
+      createdAt: "",
     },
     relationships: { author_id: 0, author: "", author_pf: "" },
   },
@@ -109,6 +111,7 @@ export const PostProvider = ({ children }: any) => {
       category: "",
       category_id: "",
       body: "",
+      createdAt: "",
     },
     relationships: { author_id: 0, author: "", author_pf: "" },
   });

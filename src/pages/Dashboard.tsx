@@ -6,6 +6,7 @@ import { axiosClient } from "../utils/axios.client";
 import AuthContext from "../context/AuthContext";
 import { DashboardLayout } from "../components/Layout/DashboardLayout";
 import PostContext from "../context/PostContext";
+import parse from "html-react-parser";
 
 interface PostItem {
   id: string;
@@ -53,7 +54,11 @@ export const Dashboard = () => {
       dataIndex: "body",
       key: "body",
       render: (content: string) => (
-        <p>{content.length > 50 ? content.slice(0, 100) + "..." : content}</p>
+        <div className="max-h-[3rem] overflow-hidden">
+          {content.length > 50
+            ? parse(content.slice(0, 100) + "...")
+            : parse(content)}
+        </div>
       ),
     },
     {
@@ -82,7 +87,6 @@ export const Dashboard = () => {
                   })
                   .then((res) => {
                     const fetchData = res.data.data;
-                    // console.log(fetchData);
                     setPosts(fetchData);
                   });
               }}
@@ -104,7 +108,6 @@ export const Dashboard = () => {
       })
       .then((res) => {
         const fetchData = res.data.data;
-        // console.log(fetchData);
         setPosts(fetchData);
       });
   }, [posts]);

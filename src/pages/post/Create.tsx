@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import PostContext, { CategoryType } from "../../context/PostContext";
 import { FormLayout } from "../../components/Layout/FormLayout";
 import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import { TextEditor } from "../../components/Common/TextEditor";
 
 export const Create = () => {
   const navigate = useNavigate();
@@ -23,9 +24,11 @@ export const Create = () => {
   });
 
   const {
+    control,
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -86,14 +89,14 @@ export const Create = () => {
         <h1 className="text-2xl text-center font-semibold">Create Post</h1>
 
         <input
-          className="formField"
+          className="form-field"
           type="text"
           placeholder="Title..."
           {...register("title")}
         />
-        <p className="errorField">{errors.title?.message}</p>
+        <p className="error-field">{errors.title?.message}</p>
 
-        <select className="formField" {...register("category")}>
+        <select className="form-field bg-white" {...register("category")}>
           <option value="">Pick a category</option>
           {categories &&
             categories.map((category) => {
@@ -104,14 +107,23 @@ export const Create = () => {
               );
             })}
         </select>
-        <p className="errorField">{errors.category?.message}</p>
+        <p className="error-field">{errors.category?.message}</p>
 
-        <textarea
-          className=" min-h-[3rem] formField"
+        {/* <textarea
+          className=" min-h-[3rem] form-field"
           placeholder="Body..."
           {...register("body")}
         />
-        <p className="errorField">{errors.body?.message}</p>
+        <p className="error-field">{errors.body?.message}</p> */}
+
+        <Controller
+          control={control}
+          name="body"
+          render={({ field: { onChange } }) => (
+            <TextEditor body="" onChange={onChange} setError={setError} clearErrors={clearErrors} />
+          )}
+        />
+        <p className="error-field">{errors.body?.message}</p>
 
         <label htmlFor="thumbnail" className="mt-3">
           {previewThumbnail && (
@@ -141,7 +153,7 @@ export const Create = () => {
             Upload Thumbnail
           </button>
         </label>
-        <p className="errorField">{errors.thumbnail?.message}</p>
+        <p className="error-field">{errors.thumbnail?.message}</p>
 
         <div className="flex justify-end space-x-2">
           <button

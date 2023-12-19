@@ -43,7 +43,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="h-3/4 flex justify-center items-center">
+    <div className="h-[47.5rem] flex justify-center items-center">
       <form
         className="flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
         onSubmit={handleSubmit(onLogin)}
@@ -51,31 +51,31 @@ export const Login = () => {
         <h1 className="text-2xl text-center font-semibold">Login</h1>
 
         <input
-          className="formField"
+          className="form-field"
           type="email"
           id="email"
           placeholder="Email"
           {...register("email")}
         />
-        <p className="errorField">{errors.email?.message}</p>
+        <p className="error-field">{errors.email?.message}</p>
 
         <input
-          className="formField"
+          className="form-field"
           type="password"
           id="password"
           placeholder="Password"
           {...register("password")}
         />
-        <p className="errorField">{errors.password?.message}</p>
+        <p className="error-field">{errors.password?.message}</p>
 
-        <button className="mt-6 submitBtn" type="submit">
+        <button className="mt-6 submit-btn" type="submit">
           Sign In
         </button>
         <div className="flex space-x-2 mt-6 justify-center items-center">
           <p>Not sign up yet?</p>
           <Link
             to={"/register"}
-            className={"text-blue-500 hover:text-blue-700"}
+            className={"text-blue-500 hover:text-blue-700 hover:underline"}
           >
             Create an account
           </Link>

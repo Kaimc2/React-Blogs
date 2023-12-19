@@ -15,7 +15,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="flex relative text-lg justify-between items-center py-6 px-8 shadow-lg">
+      <nav className="flex sticky top-0 z-10 bg-white text-lg justify-between items-center py-6 px-8 shadow-lg overflow-x-clip">
         <div>
           <Link className="flex items-center space-x-3" to="/">
             <img src={reactLogo} alt="logo" />
@@ -29,7 +29,7 @@ export const Navbar = () => {
           {token ? (
             <>
               <NavLink url="/dashboard" name="Dashboard" />
-              <li className="navbarBtn">
+              <li className="navbar-btn">
                 <button onClick={() => logout()}>Logout</button>
               </li>
             </>
@@ -54,8 +54,8 @@ export const Navbar = () => {
         <ul
           className={
             showNavbar
-              ? "scale-100 block absolute top-0 right-0 px-8 py-5 space-y-3 transition ease-in-out mt-[4rem] shadow-lg bg-white z-10 w-full"
-              : "scale-0 hidden"
+              ? "block -top-1 left-0 absolute px-8 py-5 space-y-3 transition-all duration-300 ease-in-out mt-[4rem] shadow-lg bg-white z-10 w-full"
+              : "left-[100%] -top-1 absolute px-8 py-5 space-y-3 transition-all duration-300 ease-in-out mt-[4rem] shadow-lg bg-white z-10 w-full"
           }
         >
           <div className="bg-gray-300 w-full h-1 rounded-md shadow-md"></div>
@@ -92,7 +92,7 @@ export const Navbar = () => {
                 url="/dashboard"
                 name="Dashboard"
               />
-              <li className="navbarBtn">
+              <li className="navbar-btn">
                 <button onClick={() => logout()}>Logout</button>
               </li>
             </>

@@ -16,10 +16,12 @@ import { Dashboard } from "./pages/Dashboard";
 import { Page404 } from "./pages/errors/Page404";
 import { Page403 } from "./pages/errors/Page403";
 import { Account } from "./pages/Account";
+import { Categoy } from "./pages/Category";
+import { Footer } from "./components/Common/Footer";
 
 function App() {
   return (
-    <div className="h-screen">
+    <div id="home" className="h-screen">
       <Router>
         <AuthProvider>
           <PostProvider>
@@ -32,6 +34,7 @@ function App() {
                 <Route path="/post/:id/edit" element={<Edit />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboard/account" element={<Account />} />
+                <Route path="/dashboard/categories" element={<Categoy />} />
               </Route>
               <Route element={<NavbarLayout />}>
                 <Route path="/" element={<Home />} />
@@ -43,10 +46,10 @@ function App() {
                 <Route path="*" element={<Page404 />} />
               </Route>
             </Routes>
-
             <Toaster />
           </PostProvider>
         </AuthProvider>
+        <Footer />
       </Router>
     </div>
   );

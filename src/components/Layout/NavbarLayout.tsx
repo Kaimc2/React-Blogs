@@ -3,7 +3,7 @@ import { Navbar } from "../Common/Navbar";
 
 export const NavbarLayout = () => {
   return (
-    <div className="h-screen">
+    <div>
       <Navbar />
       <Outlet />
     </div>
