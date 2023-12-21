@@ -8,7 +8,7 @@ import PostContext, {
 } from "../../../context/PostContext";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { TextEditor } from "../../../components/Common/TextEditor";
+import { TextEditor } from "../../../components/common/TextEditor";
 
 interface Props {
   postId: string;

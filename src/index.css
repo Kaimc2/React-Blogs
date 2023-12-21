@@ -37,7 +37,7 @@
 
   .navbar-btn {
     @apply relative text-lg w-fit block after:block after:content-[''] after:absolute after:h-[3px] 
-          after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 
+          after:bg-black dark:after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 
           after:transition after:duration-300 after:origin-center;
   }
 
@@ -63,5 +63,17 @@
 
   .text-editor {
     @apply prose prose-slate dark:prose-invert prose-sm sm:prose-base lg:prose-base max-w-none focus:outline-none p-3;
+  }
+
+  .dashboard {
+    @apply flex flex-col md:flex-row m-5 gap-3 md:h-[78vh];
+  }
+
+  .dashboard-btn {
+    @apply border border-gray-300 py-2 -translate-y-1 shadow-xl hover:translate-y-0 hover:shadow-none w-full rounded-md transition-all ease-in-out;
+  }
+
+  .dashboard-active {
+    @apply border border-gray-300 py-2 translate-y-0 w-full rounded-md;
   }
 }

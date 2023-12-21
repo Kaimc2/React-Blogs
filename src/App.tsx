@@ -5,19 +5,20 @@ import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { Login } from "./pages/auth/Login";
 import { View } from "./pages/post/Show";
-import { Create } from "./pages/post/Create";
-import { Edit } from "./pages/post/Edit";
+import { Create as PostCreate } from "./pages/post/Create";
+import { Create as CategoryCreate } from "./pages/category/Create";
+import { Edit as PostEdit } from "./pages/post/Edit";
+import { Edit as CategoryEdit } from "./pages/category/Edit";
 import { PostProvider } from "./context/PostContext";
 import { Register } from "./pages/auth/Register";
 import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoutes from "./utils/ProtectedRoute";
-import { NavbarLayout } from "./components/Layout/NavbarLayout";
+import ProtectedRoutes from "./components/layout/ProtectedRoute";
+import { NavbarLayout } from "./components/layout/NavbarLayout";
 import { Dashboard } from "./pages/Dashboard";
 import { Page404 } from "./pages/errors/Page404";
 import { Page403 } from "./pages/errors/Page403";
-import { Account } from "./pages/Account";
-import { Categoy } from "./pages/Category";
-import { Footer } from "./components/Common/Footer";
+import { Account } from "./pages/dashboard/Account";
+import { Category } from "./pages/dashboard/Category";
 
 function App() {
   return (
@@ -28,13 +29,21 @@ function App() {
             <Routes>
               <Route element={<ProtectedRoutes />}>
                 <Route element={<NavbarLayout />}>
-                  <Route path="/post/create" element={<Create />} />
+                  <Route path="/post/create" element={<PostCreate />} />
+                  <Route path="/post/:id/edit" element={<PostEdit />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard/account" element={<Account />} />
+                  <Route path="/dashboard/categories" element={<Category />} />
+                  <Route path="/category/create" element={<CategoryCreate />} />
+                  <Route path="/category/:id/edit" element={<CategoryEdit />} />
                 </Route>
 
-                <Route path="/post/:id/edit" element={<Edit />} />
+                {/* <Route path="/post/:id/edit" element={<PostEdit />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboard/account" element={<Account />} />
-                <Route path="/dashboard/categories" element={<Categoy />} />
+                <Route path="/dashboard/categories" element={<Category />} />
+                <Route path="/category/create" element={<CategoryCreate />} />
+                <Route path="/category/:id/edit" element={<CategoryEdit />} /> */}
               </Route>
               <Route element={<NavbarLayout />}>
                 <Route path="/" element={<Home />} />
@@ -49,7 +58,6 @@ function App() {
             <Toaster />
           </PostProvider>
         </AuthProvider>
-        <Footer />
       </Router>
     </div>
   );

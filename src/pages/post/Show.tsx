@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import PostContext from "../../context/PostContext";
-import { Loader } from "../../components/Common/Loading";
+import { Loader } from "../../components/common/Loading";
 import { useForm } from "react-hook-form";
-import { Comment } from "../../components/Common/Comment";
+import { Comment } from "../../components/common/Comment";
 import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import * as yup from "yup";
@@ -56,6 +56,8 @@ export const View = () => {
   return (
     <div className="flex justify-center sm:px-10 py-5 space-x-4">
       <div className="flex flex-col items-center w-full md:w-3/4 space-y-5">
+
+        {/* Main Content */}
         <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300">
           <h1 className="text-3xl font-bold">{post.post.title}</h1>
           <div className="flex items-center space-x-3">
@@ -146,6 +148,7 @@ export const View = () => {
                 commenter,
                 commenter_pf,
                 created_at,
+                likes,
               }) => {
                 return (
                   <Comment
@@ -157,6 +160,7 @@ export const View = () => {
                     commenter={commenter}
                     commenterProfilePicture={commenter_pf}
                     createdAt={created_at}
+                    likeCount={likes}
                   />
                 );
               }

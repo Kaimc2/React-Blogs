@@ -5,10 +5,9 @@ import PostContext, {
   formField,
 } from "../../context/PostContext";
 import { EditForm } from "./form/EditForm";
-import { FormLayout } from "../../components/Layout/FormLayout";
-import { DashboardLayout } from "../../components/Layout/DashboardLayout";
+import { FormLayout } from "../../components/layout/FormLayout";
 import AuthContext from "../../context/AuthContext";
-import { Loader } from "../../components/Common/Loading";
+import { Loader } from "../../components/common/Loading";
 
 export const Edit = () => {
   const { id } = useParams();
@@ -50,10 +49,10 @@ export const Edit = () => {
   authorize(user.id, postData.author_id);
 
   return (
-    <DashboardLayout>
+    <div className="dashboard">
       <FormLayout>
         <EditForm postId={String(id)} post={postData} categories={categories} />
       </FormLayout>
-    </DashboardLayout>
+    </div>
   );
 };

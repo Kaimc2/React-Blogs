@@ -2,7 +2,7 @@ import BarLoader from "react-spinners/BarLoader";
 
 export const Loader = () => {
   return (
-    <div className="h-4/5 flex justify-center items-center">
+    <div className="h-[80vh] flex justify-center items-center">
       <BarLoader
         color={"#000000"}
         loading={true}

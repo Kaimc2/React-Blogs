@@ -16,6 +16,7 @@ interface Props {
   commenter: string;
   content: string;
   createdAt: string;
+  likeCount: number
 }
 
 export const Comment = (props: Props) => {
@@ -182,15 +183,15 @@ export const Comment = (props: Props) => {
           </form>
         )}
 
-        <div className="flex mt-3 space-x-3">
+        {/* <div className="flex mt-3 space-x-3">
           <button className="flex items-center space-x-1" title="Like">
             <RiThumbUpLine />
-            <p className="text-sm">10</p>
+            <p className="text-sm">{props.likeCount}</p>
           </button>
           <button title="Dislike">
             <RiThumbDownLine />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

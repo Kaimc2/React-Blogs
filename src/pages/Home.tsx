@@ -1,10 +1,9 @@
-import { Post } from "../components/Common/Post";
-import searchIcon from "../assets/search.svg";
+import { Post } from "../components/common/Post";
 import { useContext, useEffect, useState } from "react";
 import PostContext, { CategoryType } from "../context/PostContext";
 import ClipLoader from "react-spinners/ClipLoader";
-import Paginate from "../components/Common/Paginate";
-import { DebounceInput } from "react-debounce-input";
+import Paginate from "../components/common/Paginate";
+import { Sidebar } from "../components/common/Sidebar";
 
 export const Home = () => {
   const {
@@ -41,10 +40,9 @@ export const Home = () => {
   return (
     <div className="flex md:px-10 py-5 space-x-4">
       <div
-        className={
-          posts.length > 3
-            ? "flex flex-col items-center w-full md:w-3/4 space-y-5"
-            : "h-full md:h-[77vh] flex flex-col items-center w-full md:w-3/4 space-y-5"
+        className={`
+        flex flex-col items-center w-full h-full md:w-3/4 space-y-5
+          ${posts.length <= 3 && "h-screen md:h-[77vh]"}`
         }
       >
         {isError ? (
@@ -78,7 +76,11 @@ export const Home = () => {
             />
           ))
         ) : (
-          <div className="blog-none">No matching post for "{search}"</div>
+          <div className="blog-none">
+            {search === "" && category !== ""
+              ? `No posts in ${category} category`
+              : `No matching post for "${search}"`}
+          </div>
         )}
 
         {/* Pagination controls */}
@@ -90,53 +92,13 @@ export const Home = () => {
       </div>
 
       {/* Side Bar */}
-      <div className="hidden md:block h-fit sticky top-24 shadow-lg border border-gray-200 rounded-lg w-3/12 p-5 transition ease-in-out">
-        <div className="flex justify-between relative">
-          <DebounceInput
-            className="border border-gray-300 w-full pl-4 py-2 shadow-md focus:outline-none"
-            name="search"
-            type="text"
-            value={search}
-            minLength={1}
-            debounceTimeout={500}
-            onChange={(e) => {
-              updateSearch(e.target.value);
-            }}
-            placeholder="Search..."
-          />
-          <img
-            className="absolute right-4 mt-3 w-4"
-            src={searchIcon}
-            alt="search"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="h-[0.3rem] mx-1 my-4 rounded-md bg-gray-300 shadow-md" />
-
-        <div className="ml-1">
-          <h1 className="text-xl my-5">Categories</h1>
-          <ul className="space-y-2">
-            {categories.length > 0 &&
-              categories.map(({ id, name }) => {
-                return (
-                  <button
-                    className="flex space-x-2 hover:underline ml-4"
-                    onClick={() => {
-                      category === name
-                        ? updateSelectedCategory("")
-                        : updateSelectedCategory(name);
-                    }}
-                    key={id}
-                  >
-                    <p>{name}</p>
-                    {category === name && <p>X</p>}
-                  </button>
-                );
-              })}
-          </ul>
-        </div>
-      </div>
+      <Sidebar
+        search={search}
+        updateSearch={updateSearch}
+        categories={categories}
+        category={category}
+        updateSelectedCategory={updateSelectedCategory}
+      />
     </div>
   );
 };
