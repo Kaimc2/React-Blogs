@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../utils/axios.client";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Loader } from "../components/common/Loading";
 
 interface AuthField {
   user: { id: number; name: string; profile: string };
@@ -37,22 +38,27 @@ export const AuthProvider = ({ children }: any) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(initialUser);
   const [token, setToken] = useState(initialToken);
+  const [isUserloaded, setIsUserLoaded] = useState(false);
 
   // Get set the current user from token and set it
   useEffect(() => {
     const fetchUser = async () => {
       // Check if token exist
-      if (token === "") return;
+      if (token === "") {
+        setIsUserLoaded(true);
+        return;
+      }
 
       const { data } = await axiosClient.get("api/v1/user", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       setUser(data.data);
+      setIsUserLoaded(true);
     };
 
     fetchUser();
-  }, [token]);
+  }, [initialToken, token]);
 
   const http = axios.create({
     baseURL: "http://127.0.0.1:8000/",
@@ -85,7 +91,8 @@ export const AuthProvider = ({ children }: any) => {
           console.log(res.data);
           localStorage.removeItem("ACCESS_TOKEN");
           setUser(initialUser);
-          setToken(String(initialToken));
+          setToken("");
+          navigate('/');
         })
         .catch((err) => console.log(err)),
       {
@@ -101,6 +108,8 @@ export const AuthProvider = ({ children }: any) => {
       navigate("/forbidden");
     }
   };
+
+  if (!isUserloaded) return <Loader />;
 
   return (
     <AuthContext.Provider

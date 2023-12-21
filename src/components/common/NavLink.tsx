@@ -1,6 +1,13 @@
+import { Dispatch, SetStateAction } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export const NavLink = (props: any) => {
+interface Props {
+  url: string,
+  name: string,
+  onBtnClick?: Dispatch<SetStateAction<boolean>>
+}
+
+export const NavLink = (props: Props) => {
   const location = useLocation();
 
   return (

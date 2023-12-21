@@ -21,6 +21,7 @@ export interface PostItem {
     author: string;
     author_pf: string;
     comments?: [];
+    likes?: number
   };
 }
 
@@ -168,7 +169,7 @@ export const PostProvider = ({ children }: any) => {
   const storePost = async (data: FormData) => {
     await axios.post("http://127.0.0.1:8000/api/v1/posts", data).then(() => {
       retrievePosts(1, "", "");
-      navigate("/");
+      navigate("/dashboard");
     });
   };
 

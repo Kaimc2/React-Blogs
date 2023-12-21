@@ -4,10 +4,10 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useEffect, useState } from "react";
 import PostContext, { CategoryType } from "../../context/PostContext";
-import { FormLayout } from "../../components/Layout/FormLayout";
+import { FormLayout } from "../../components/layout/FormLayout";
 import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
-import { TextEditor } from "../../components/Common/TextEditor";
+import { TextEditor } from "../../components/common/TextEditor";
 
 export const Create = () => {
   const navigate = useNavigate();
@@ -84,7 +84,6 @@ export const Create = () => {
       <form
         className="flex flex-col"
         onSubmit={handleSubmit(onSubmit)}
-        method="post"
       >
         <h1 className="text-2xl text-center font-semibold">Create Post</h1>
 
@@ -108,13 +107,6 @@ export const Create = () => {
             })}
         </select>
         <p className="error-field">{errors.category?.message}</p>
-
-        {/* <textarea
-          className=" min-h-[3rem] form-field"
-          placeholder="Body..."
-          {...register("body")}
-        />
-        <p className="error-field">{errors.body?.message}</p> */}
 
         <Controller
           control={control}
@@ -159,7 +151,7 @@ export const Create = () => {
           <button
             type="button"
             className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
           >
             Cancel
           </button>
