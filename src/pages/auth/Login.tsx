@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { axiosClient } from "../../utils/axios.client";
 import { useContext } from "react";
@@ -8,6 +8,7 @@ import AuthContext from "../../context/AuthContext";
 import toast from "react-hot-toast";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   const schema = yup.object().shape({
@@ -43,9 +44,9 @@ export const Login = () => {
   };
 
   return (
-    <div className="h-[47.5rem] flex justify-center items-center">
+    <div className="md:h-[47.5rem] my-5 md:my-0 flex justify-center items-center">
       <form
-        className="flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
+        className="w-full flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
         onSubmit={handleSubmit(onLogin)}
       >
         <h1 className="text-2xl text-center font-semibold">Login</h1>
@@ -71,14 +72,25 @@ export const Login = () => {
         <button className="mt-6 submit-btn" type="submit">
           Sign In
         </button>
-        <div className="flex space-x-2 mt-6 justify-center items-center">
-          <p>Not sign up yet?</p>
-          <Link
-            to={"/register"}
-            className={"text-blue-500 hover:text-blue-700 hover:underline"}
+
+        <div className="h-[0.3rem] mx-5 mt-4 rounded-md bg-gray-300 shadow-md" />
+
+        <div className="flex flex-col md:flex-row md:space-x-2 mt-4 justify-evenly items-center">
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100"
           >
             Create an account
-          </Link>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/forgot-password")}
+            className="mt-5 md:mt-0 border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100"
+          >
+            Reset password
+          </button>
         </div>
       </form>
     </div>

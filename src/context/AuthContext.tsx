@@ -6,33 +6,39 @@ import toast from "react-hot-toast";
 import { Loader } from "../components/common/Loading";
 
 interface AuthField {
-  user: { id: number; name: string; profile: string };
+  user: {
+    id: number;
+    email?: string;
+    name: string;
+    profile: string;
+    isVerified: boolean;
+  };
   token: string;
   setToken: (token: string) => void;
-  setUser: (user: { id: number; name: string; profile: string }) => void;
+  setUser: (user: { id: number; name: string; profile: string, isVerified: boolean }) => void;
   authorize: (userId: number, authorId: number) => void;
   login: (data: any) => Promise<void>;
   logout: () => void;
-  initialUser: { id: number; name: string; profile: string };
+  initialUser: { id: number; name: string; profile: string, isVerified: boolean };
   initialToken: string;
 }
 
 const AuthContext = createContext<AuthField>({
-  user: { id: 1, name: "", profile: "" },
+  user: { id: 1, name: "", profile: "", isVerified: false },
   token: "",
   setToken: () => {},
   setUser: () => {},
   authorize: () => {},
   login: async () => {},
   logout: () => {},
-  initialUser: { id: 0, name: "", profile: "" },
+  initialUser: { id: 0, name: "", profile: "", isVerified: false },
   initialToken: "",
 });
 
 export const initialToken = localStorage.getItem("ACCESS_TOKEN")
   ? String(localStorage.getItem("ACCESS_TOKEN"))
   : "";
-export const initialUser = { id: 0, name: "", profile: "" };
+export const initialUser = { id: 0, name: "", profile: "", isVerified: false };
 
 export const AuthProvider = ({ children }: any) => {
   const navigate = useNavigate();
@@ -40,10 +46,8 @@ export const AuthProvider = ({ children }: any) => {
   const [token, setToken] = useState(initialToken);
   const [isUserloaded, setIsUserLoaded] = useState(false);
 
-  // Get set the current user from token and set it
   useEffect(() => {
-    const fetchUser = async () => {
-      // Check if token exist
+    const fetchCurrentUser = async () => {
       if (token === "") {
         setIsUserLoaded(true);
         return;
@@ -57,7 +61,7 @@ export const AuthProvider = ({ children }: any) => {
       setIsUserLoaded(true);
     };
 
-    fetchUser();
+    fetchCurrentUser();
   }, [initialToken, token]);
 
   const http = axios.create({
@@ -92,7 +96,7 @@ export const AuthProvider = ({ children }: any) => {
           localStorage.removeItem("ACCESS_TOKEN");
           setUser(initialUser);
           setToken("");
-          navigate('/');
+          navigate("/");
         })
         .catch((err) => console.log(err)),
       {

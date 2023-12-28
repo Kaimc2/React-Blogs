@@ -3,9 +3,17 @@ import AuthContext from "../../context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoutes = () => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
 
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  return token ? (
+    user.isVerified ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/verify-email" />
+    )
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 export default ProtectedRoutes;

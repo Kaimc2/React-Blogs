@@ -18,7 +18,7 @@ export const Create = () => {
 
   const schema = yup.object().shape({
     title: yup.string().required(),
-    body: yup.string().required().max(2000),
+    body: yup.string().required().min(3),
     category: yup.string().required(),
     thumbnail: yup.mixed().required(),
   });
@@ -33,6 +33,7 @@ export const Create = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   useEffect(() => {
+    document.title = "Create - React-Blog";
     const fetchData = async () => {
       const response: any = await getCategories();
       setCategories(response.data.data);
@@ -65,7 +66,7 @@ export const Create = () => {
         toast.success("Post created successfully");
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
         const errors = error.response.data.errors;
         setError("title", { message: errors.title });
         setError("thumbnail", { message: errors.thumbnail[0] });

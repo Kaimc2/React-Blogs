@@ -79,6 +79,7 @@ export const Category = () => {
   ];
 
   useEffect(() => {
+    document.title = "Category - React-Blog";
     axiosClient.get(`api/v1/categories?search=${search}`).then((res) => {
       setCategories(res.data.data);
       setLoading(false);

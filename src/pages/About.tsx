@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 export const About = () => {
+  useEffect(() => {
+    document.title = "About - React-Blog"
+  }, [])
+  
   return (
     <section className="md:h-[76vh] m-5 flex flex-col md:flex-row items-center justify-between gap-10">
       <div className="p-10 space-y-8">

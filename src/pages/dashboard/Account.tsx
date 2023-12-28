@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { axiosClient } from "../../utils/axios.client";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const Account = () => {
   const { Content } = Layout;
@@ -33,6 +34,7 @@ export const Account = () => {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -59,11 +61,14 @@ export const Account = () => {
           id: user.id,
           name: data.name,
           profile: data.profile[0] ? res.data.profile : user.profile,
+          isVerified: user.isVerified
         });
         setIsEdit(false);
+        toast.success("Profile successfully updated");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setError("name", { message: error.response.data.message });
       });
   };
 

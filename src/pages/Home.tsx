@@ -1,9 +1,9 @@
 import { Post } from "../components/common/Post";
 import { useContext, useEffect, useState } from "react";
 import PostContext, { CategoryType } from "../context/PostContext";
-import ClipLoader from "react-spinners/ClipLoader";
 import Paginate from "../components/common/Paginate";
 import { Sidebar } from "../components/common/Sidebar";
+import { PostLoader } from "../components/common/PostLoader";
 
 export const Home = () => {
   const {
@@ -23,6 +23,7 @@ export const Home = () => {
   const token = localStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
+    document.title = "React-Blog";
     retrievePosts(currentPage, search, category);
     const fetchCategories = async () => {
       const res: any = await getCategories();
@@ -42,24 +43,14 @@ export const Home = () => {
       <div
         className={`
         flex flex-col items-center w-full h-full md:w-3/4 space-y-5
-          ${posts.length <= 3 && "h-screen md:h-[77vh]"}`
-        }
+          ${posts.length <= 3 && "h-screen md:h-[77vh]"}`}
       >
         {isError ? (
           <div className="blog-error">
             <p>Error loading data</p>
           </div>
         ) : isLoading ? (
-          <div className="loader">
-            <ClipLoader
-              color={"#000000"}
-              loading={isLoading}
-              size={25}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-            <p>Loading...</p>
-          </div>
+          <PostLoader />
         ) : posts.length > 0 ? (
           posts.map(({ post, relationships }: any) => (
             <Post
