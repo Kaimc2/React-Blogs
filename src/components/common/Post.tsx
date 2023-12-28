@@ -63,10 +63,8 @@ export const Post = (props: Props) => {
           </div>
 
           <h1 className="text-lg font-bold my-2">{props.title}</h1>
-          <div className="mt-2 md:mt-0 text-gray-700">
-            {props.body.length > 50
-              ? parse(DOMPurify.sanitize(props.body.slice(0, 200)) + "...")
-              : parse(DOMPurify.sanitize(props.body))}
+          <div className="mt-2 md:mt-0 text-gray-700 line-clamp-3">
+            {parse(DOMPurify.sanitize(props.body))}
           </div>
         </div>
       </div>

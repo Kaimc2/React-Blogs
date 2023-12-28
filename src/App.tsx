@@ -19,6 +19,9 @@ import { Page404 } from "./pages/errors/Page404";
 import { Page403 } from "./pages/errors/Page403";
 import { Account } from "./pages/dashboard/Account";
 import { Category } from "./pages/dashboard/Category";
+import { VerifyEmail } from "./pages/auth/VerifyEmail";
+import { ForgotPassword } from "./pages/auth/ForgotPassword";
+import { ResetPassword } from "./pages/auth/ResetPassword";
 
 function App() {
   return (
@@ -37,20 +40,17 @@ function App() {
                   <Route path="/category/create" element={<CategoryCreate />} />
                   <Route path="/category/:id/edit" element={<CategoryEdit />} />
                 </Route>
-
-                {/* <Route path="/post/:id/edit" element={<PostEdit />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/dashboard/account" element={<Account />} />
-                <Route path="/dashboard/categories" element={<Category />} />
-                <Route path="/category/create" element={<CategoryCreate />} />
-                <Route path="/category/:id/edit" element={<CategoryEdit />} /> */}
               </Route>
+
               <Route element={<NavbarLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/post/:id" element={<View />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
                 <Route path="/forbidden" element={<Page403 />} />
                 <Route path="*" element={<Page404 />} />
               </Route>

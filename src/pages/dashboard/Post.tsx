@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { axiosClient } from "../../utils/axios.client";
 import { Search } from "../../components/common/Search";
 import PostContext from "../../context/PostContext";
 import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 
 interface PostItem {
   id: string;
@@ -22,6 +23,7 @@ interface DataType {
 
 export const Post = () => {
   const { Content } = Layout;
+  const navigate = useNavigate();
   const { token } = useContext(AuthContext);
   const { deletePost } = useContext(PostContext);
   const [posts, setPosts] = useState<DataType[]>();
@@ -56,10 +58,8 @@ export const Post = () => {
       dataIndex: "body",
       key: "body",
       render: (content: string) => (
-        <div className="max-h-[3rem] overflow-hidden">
-          {content.length > 50
-            ? parse(content.slice(0, 100) + "...")
-            : parse(content)}
+        <div className="max-h-[3rem] max-w-[30rem] line-clamp-2">          
+          {parse(DOMPurify.sanitize(content))}
         </div>
       ),
     },
@@ -100,6 +100,10 @@ export const Post = () => {
         const fetchData = res.data.data;
         setPosts(fetchData);
         setLoading(false);
+      }).catch((error) => {
+        if (error.response.status === 403) {
+          navigate('/verify-email');
+        }
       });
   }, [search, deletePost]);
 

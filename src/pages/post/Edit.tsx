@@ -18,6 +18,7 @@ export const Edit = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
+    document.title = "Edit - React-Blog";
     const fetchData = async () => {
       const data: any = await retrievePost(String(id)).catch((error) => {
         if (error.response.status === 404) {

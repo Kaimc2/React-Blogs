@@ -2,15 +2,20 @@ import { Search } from "./Search";
 import { CategoryType } from "../../context/PostContext";
 
 interface Props {
-    search: string,
-    updateSearch: (newString: string) => void,
-    categories: CategoryType[],
-    category: string,
-    updateSelectedCategory: (newCategory: string) => void
+  search: string;
+  updateSearch: (newString: string) => void;
+  categories: CategoryType[];
+  category: string;
+  updateSelectedCategory: (newCategory: string) => void;
 }
 
-export const Sidebar = ({ search, updateSearch, categories, category, updateSelectedCategory }: Props) => {
-
+export const Sidebar = ({
+  search,
+  updateSearch,
+  categories,
+  category,
+  updateSelectedCategory,
+}: Props) => {
   return (
     <div className="hidden md:block h-fit sticky top-24 shadow-lg border border-gray-200 rounded-lg w-3/12 p-5 transition ease-in-out">
       <Search search={search} updateSearch={updateSearch} />
@@ -20,12 +25,12 @@ export const Sidebar = ({ search, updateSearch, categories, category, updateSele
 
       <div className="ml-1">
         <h1 className="text-xl my-5">Categories</h1>
-        <ul className="space-y-2 max-h-[20rem] overflow-y-scroll">
+        <ul className="space-y-3 max-h-[20rem] overflow-y-scroll">
           {categories.length > 0 &&
             categories.map(({ id, name }) => {
               return (
                 <button
-                  className="flex space-x-2 hover:underline ml-4"
+                  className="category-content"
                   onClick={() => {
                     category === name
                       ? updateSelectedCategory("")
@@ -33,8 +38,7 @@ export const Sidebar = ({ search, updateSearch, categories, category, updateSele
                   }}
                   key={id}
                 >
-                  <p>{name}</p>
-                  {category === name && <p>X</p>}
+                  <p className={`${category === name && "active"}`}>{name}</p>
                 </button>
               );
             })}

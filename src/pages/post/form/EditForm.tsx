@@ -25,7 +25,7 @@ export const EditForm = (props: Props) => {
   const schema = yup.object().shape({
     title: yup.string().required(),
     category: yup.string().required(),
-    body: yup.string().required().max(2000),
+    body: yup.string().required().min(3),
     thumbnail: yup.mixed().required(),
   });
 

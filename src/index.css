@@ -41,6 +41,17 @@
           after:transition after:duration-300 after:origin-center;
   }
 
+  .category-content {
+    @apply flex space-x-2 ml-4 relative after:block after:content-[''] after:absolute after:h-[3px] 
+          after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition 
+          after:duration-300 after:bottom-0 after:origin-left;
+  }
+
+  .category-content > .active {
+    @apply relative after:block after:content-[''] after:absolute after:h-[3px] 
+          after:bg-black after:w-full after:bottom-0 after:origin-left after:scale-100
+  }
+
   .profile-picture {
     @apply border w-[3rem] h-[3rem] rounded-full;
   }

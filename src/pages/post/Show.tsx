@@ -35,7 +35,6 @@ export const View = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onComment = (data: any) => {
-    // console.log(data);
     const formData = new FormData();
 
     formData.append("content", data.comment);
@@ -56,7 +55,6 @@ export const View = () => {
   return (
     <div className="flex justify-center sm:px-10 py-5 space-x-4">
       <div className="flex flex-col items-center w-full md:w-3/4 space-y-5">
-
         {/* Main Content */}
         <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300">
           <h1 className="text-3xl font-bold">{post.post.title}</h1>
@@ -96,39 +94,48 @@ export const View = () => {
               className="profile-picture mr-5"
               src={
                 user.profile
-                ? import.meta.env.VITE_BACKEND_URL + user.profile
-                : import.meta.env.VITE_BACKEND_URL + "storage/profiles/pf.png"
+                  ? import.meta.env.VITE_BACKEND_URL + user.profile
+                  : import.meta.env.VITE_BACKEND_URL + "storage/profiles/pf.png"
               }
               alt="profile"
             />
             {user.id !== 0 ? (
-              <form className="w-full" onSubmit={handleSubmit(onComment)}>
-                <textarea
-                  className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300"
-                  placeholder="Add a comment..."
-                  onFocus={() => setEditable(true)}
-                  {...register("comment")}
-                ></textarea>
-                <p className="error-field">{errors.comment?.message}</p>
+              user.isVerified ? (
+                <form className="w-full" onSubmit={handleSubmit(onComment)}>
+                  <textarea
+                    className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300"
+                    placeholder="Add a comment..."
+                    onFocus={() => setEditable(true)}
+                    {...register("comment")}
+                  ></textarea>
+                  <p className="error-field">{errors.comment?.message}</p>
 
-                {editable && (
-                  <div className="flex justify-end space-x-3">
-                    <button
-                      className="submit-btn"
-                      type="button"
-                      onClick={() => {
-                        setEditable(false);
-                        resetField("comment");
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button className="submit-btn" type="submit">
-                      Comment
-                    </button>
-                  </div>
-                )}
-              </form>
+                  {editable && (
+                    <div className="flex justify-end space-x-3">
+                      <button
+                        className="submit-btn"
+                        type="button"
+                        onClick={() => {
+                          setEditable(false);
+                          resetField("comment");
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button className="submit-btn" type="submit">
+                        Comment
+                      </button>
+                    </div>
+                  )}
+                </form>
+              ) : (
+                <button
+                  onClick={() => navigate("/verify-email")}
+                  className="my-1 border border-gray-300 rounded-md shadow-md hover:bg-gray-50 w-full"
+                >
+                  Verify your email to comment
+                </button>
+              )
             ) : (
               <button
                 onClick={() => navigate("/login")}
