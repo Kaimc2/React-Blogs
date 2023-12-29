@@ -1,17 +1,19 @@
 import { DebounceInput } from "react-debounce-input";
-import searchIcon from "../../assets/search.svg";
+import { RiSearch2Line } from "react-icons/ri";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-    search?: string,
-    updateSearch: Dispatch<SetStateAction<string>> | ((newString: string) => void)
+  search?: string;
+  updateSearch:
+    | Dispatch<SetStateAction<string>>
+    | ((newString: string) => void);
 }
 
-export const Search = ({search, updateSearch}: Props) => {
+export const Search = ({ search, updateSearch }: Props) => {
   return (
     <div className="flex justify-between relative">
       <DebounceInput
-        className="border border-gray-300 w-full pl-4 py-2 shadow-md focus:outline-none"
+        className="border border-gray-300 w-full pl-4 py-2 shadow-md focus:outline-none dark:bg-slate-700 dark:border-slate-900"
         name="search"
         type="text"
         value={search}
@@ -22,11 +24,10 @@ export const Search = ({search, updateSearch}: Props) => {
         }}
         placeholder="Search..."
       />
-      <img
-        className="absolute right-4 mt-3 w-4"
-        src={searchIcon}
-        alt="search"
-      />
+
+      <div className="absolute right-4 mt-3 w-4 dark:border-white">
+        <RiSearch2Line />
+      </div>
     </div>
   );
 };

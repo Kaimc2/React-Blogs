@@ -44,9 +44,9 @@ export const Login = () => {
   };
 
   return (
-    <div className="md:h-[47.5rem] my-5 md:my-0 flex justify-center items-center">
+    <div className="md:h-[47.5rem] my-5 md:my-0 flex justify-center items-center dark:bg-slate-900 dark:text-slate-300">
       <form
-        className="w-full flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
+        className="w-full flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg dark:bg-slate-800 dark:border-none"
         onSubmit={handleSubmit(onLogin)}
       >
         <h1 className="text-2xl text-center font-semibold">Login</h1>
@@ -79,7 +79,7 @@ export const Login = () => {
           <button
             type="button"
             onClick={() => navigate("/register")}
-            className="border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100"
+            className="border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100 dark:bg-slate-700 dark:border-none hover:dark:bg-slate-600"
           >
             Create an account
           </button>
@@ -87,7 +87,7 @@ export const Login = () => {
           <button
             type="button"
             onClick={() => navigate("/forgot-password")}
-            className="mt-5 md:mt-0 border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100"
+            className="mt-5 md:mt-0 border border-gray-300 p-2 w-full shadow-md rounded-md hover:bg-gray-100 dark:bg-slate-700 dark:border-none hover:dark:bg-slate-600"
           >
             Reset password
           </button>

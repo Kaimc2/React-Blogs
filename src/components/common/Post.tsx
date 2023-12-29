@@ -49,7 +49,7 @@ export const Post = (props: Props) => {
                   ? props.setCategory("")
                   : props.setCategory(props.category);
               }}
-              className="border border-gray-300 shadow-md rounded-full px-3 py-1 hover:bg-gray-100"
+              className="border border-gray-300 shadow-md rounded-full px-3 py-1 hover:bg-gray-100 dark:border-slate-600 hover:dark:bg-slate-600"
             >
               {props.selectedCategory === props.category ? (
                 <span>
@@ -63,7 +63,7 @@ export const Post = (props: Props) => {
           </div>
 
           <h1 className="text-lg font-bold my-2">{props.title}</h1>
-          <div className="mt-2 md:mt-0 text-gray-700 line-clamp-3">
+          <div className="mt-2 md:mt-0 text-gray-700 dark:text-slate-300 line-clamp-3">
             {parse(DOMPurify.sanitize(props.body))}
           </div>
         </div>

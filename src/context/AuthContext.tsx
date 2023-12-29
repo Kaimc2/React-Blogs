@@ -1,4 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../utils/axios.client";
 import axios from "axios";
@@ -15,12 +21,24 @@ interface AuthField {
   };
   token: string;
   setToken: (token: string) => void;
-  setUser: (user: { id: number; name: string; profile: string, isVerified: boolean }) => void;
+  setUser: (user: {
+    id: number;
+    name: string;
+    profile: string;
+    isVerified: boolean;
+  }) => void;
   authorize: (userId: number, authorId: number) => void;
   login: (data: any) => Promise<void>;
   logout: () => void;
-  initialUser: { id: number; name: string; profile: string, isVerified: boolean };
+  initialUser: {
+    id: number;
+    name: string;
+    profile: string;
+    isVerified: boolean;
+  };
   initialToken: string;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const AuthContext = createContext<AuthField>({
@@ -33,6 +51,8 @@ const AuthContext = createContext<AuthField>({
   logout: () => {},
   initialUser: { id: 0, name: "", profile: "", isVerified: false },
   initialToken: "",
+  isDarkMode: true,
+  toggleDarkMode: () => {},
 });
 
 export const initialToken = localStorage.getItem("ACCESS_TOKEN")
@@ -45,6 +65,8 @@ export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState(initialUser);
   const [token, setToken] = useState(initialToken);
   const [isUserloaded, setIsUserLoaded] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -127,6 +149,8 @@ export const AuthProvider = ({ children }: any) => {
         logout,
         initialToken,
         initialUser,
+        isDarkMode,
+        toggleDarkMode,
       }}
     >
       {children}

@@ -80,7 +80,7 @@ export const Comment = (props: Props) => {
         <div className="relative flex justify-between">
           <div className="flex text-sm space-x-2 mb-2">
             <p className="font-bold">{props.commenter}</p>
-            <p className="text-gray-600">{props.createdAt}</p>
+            <p className="text-gray-600 dark:text-slate-400">{props.createdAt}</p>
           </div>
 
           {props.commenter_id === user.id && (
@@ -100,7 +100,7 @@ export const Comment = (props: Props) => {
                   className={
                     !isToggle
                       ? "hidden"
-                      : "absolute bg-white block right-3 border border-gray-300 rounded-md shadow-md"
+                      : "absolute bg-white block right-3 border border-gray-300 rounded-md shadow-md dark:bg-slate-700 dark:border-none"
                   }
                 >
                   <button
@@ -158,7 +158,7 @@ export const Comment = (props: Props) => {
         ) : (
           <form onSubmit={handleSubmit(onSubmit)}>
             <textarea
-              className="w-full p-2 max-h-[4rem] rounded-md shadow-lg border border-gray-300"
+              className="w-full p-2 max-h-[4rem] rounded-md shadow-lg border border-gray-300 dark:bg-slate-700 dark:border-none"
               placeholder="Add a comment..."
               id="comment"
               {...register("comment")}

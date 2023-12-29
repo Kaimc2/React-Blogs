@@ -140,7 +140,7 @@ export const Create = () => {
           />
           <button
             type="button"
-            className="text-center p-1 shadow-lg border border-gray-300 rounded w-full my-3"
+            className="text-center p-1 shadow-lg border border-gray-300 dark:border-none dark:bg-slate-700 rounded w-full my-3"
             onClick={() => document.getElementById("thumbnail")?.click()}
           >
             Upload Thumbnail

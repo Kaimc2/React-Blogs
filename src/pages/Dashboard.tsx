@@ -5,13 +5,11 @@ import { Post } from "./dashboard/Post";
 export const Dashboard = () => {
   useEffect(() => {
     document.title = "Dashboard - React-Blog";
-  }, [])
+  }, []);
 
   return (
     <div className="dashboard">
-      {/* Sidebar */}
       <Account />
-
       <Post />
     </div>
   );

@@ -30,7 +30,7 @@ const MenuBar = () => {
   }
 
   return (
-    <div className="flex items-center justify-evenly text-xl flex-wrap p-[0.5rem] mt-3 bg-black rounded-tl-md rounded-tr-md">
+    <div className="flex items-center justify-evenly text-xl flex-wrap p-[0.5rem] mt-3 bg-black dark:bg-slate-900 rounded-tl-md rounded-tr-md">
       <button
         title="Bold"
         type="button"
@@ -251,7 +251,7 @@ export const TextEditor = ({ body, onChange, setError, clearErrors }: any) => {
       editorProps={{
         attributes: {
           class:
-            "text-editor border shadow-md rounded-bl-md rounded-br-md min-h-[5rem] max-h-[10rem] overflow-y-scroll overflow-x-hidden",
+            "text-editor border dark:border-none dark:bg-slate-700 shadow-md rounded-bl-md rounded-br-md min-h-[5rem] max-h-[10rem] overflow-y-scroll overflow-x-hidden",
         },
       }}
       children={``}

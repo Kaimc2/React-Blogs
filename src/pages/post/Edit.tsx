@@ -50,10 +50,8 @@ export const Edit = () => {
   authorize(user.id, postData.author_id);
 
   return (
-    <div className="dashboard">
-      <FormLayout>
-        <EditForm postId={String(id)} post={postData} categories={categories} />
-      </FormLayout>
-    </div>
+    <FormLayout>
+      <EditForm postId={String(id)} post={postData} categories={categories} />
+    </FormLayout>
   );
 };
