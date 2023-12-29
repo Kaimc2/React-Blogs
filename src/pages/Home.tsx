@@ -39,7 +39,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="flex md:px-10 py-5 space-x-4">
+    <div className="flex md:px-10 py-5 space-x-4 dark:bg-slate-900">
       <div
         className={`
         flex flex-col items-center w-full h-full md:w-3/4 space-y-5

@@ -61,7 +61,7 @@ export const Account = () => {
           id: user.id,
           name: data.name,
           profile: data.profile[0] ? res.data.profile : user.profile,
-          isVerified: user.isVerified
+          isVerified: user.isVerified,
         });
         setIsEdit(false);
         toast.success("Profile successfully updated");
@@ -73,7 +73,7 @@ export const Account = () => {
   };
 
   return (
-    <div className="border border-gray-300 rounded shadow-md md:w-[20%]">
+    <div className="border border-gray-300 rounded shadow-md md:w-[20%] dark:border-none dark:bg-slate-800">
       <Content className="m-5">
         {isEdit ? (
           <div className="">
@@ -101,9 +101,9 @@ export const Account = () => {
                         : import.meta.env.VITE_BACKEND_URL +
                           "storage/profiles/pf.png"
                     }
-                    className="w-[10rem] h-[10rem] border rounded-full"
+                    className="w-[10rem] h-[10rem] border rounded-full dark:border-none"
                   />
-                  <div className="absolute border border-gray-300 rounded bottom-2 right-16 bg-white px-3 py-1">
+                  <div className="absolute border border-gray-300 rounded bottom-2 right-16 bg-white px-3 py-1 dark:border-none dark:bg-slate-700">
                     Edit
                   </div>
                 </span>
@@ -121,7 +121,7 @@ export const Account = () => {
               <div className="flex space-x-2">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white dashboard-btn"
+                  className="bg-blue-500 text-white dashboard-btn dark:bg-blue-700"
                 >
                   Update
                 </button>
@@ -131,7 +131,7 @@ export const Account = () => {
                     setPreviewProfile("");
                     setIsEdit(!isEdit);
                   }}
-                  className="dashboard-btn"
+                  className="dashboard-btn dark:bg-slate-700"
                 >
                   Cancel
                 </button>
@@ -141,6 +141,7 @@ export const Account = () => {
               <div className="h-[0.3rem] mx-1 my-4 rounded-md bg-gray-300 shadow-md" />
 
               <button
+                type="button"
                 className={
                   location.pathname === "/dashboard"
                     ? "dashboard-active"

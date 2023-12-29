@@ -53,10 +53,10 @@ export const View = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex justify-center sm:px-10 py-5 space-x-4">
+    <div className="flex justify-center sm:px-10 py-5 space-x-4 dark:bg-slate-900 dark:text-slate-300">
       <div className="flex flex-col items-center w-full md:w-3/4 space-y-5">
         {/* Main Content */}
-        <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300">
+        <div className="w-full md:w-3/4 space-y-4 p-4 shadow-xl rounded-md border border-gray-300 dark:border-none dark:bg-slate-800">
           <h1 className="text-3xl font-bold">{post.post.title}</h1>
           <div className="flex items-center space-x-3">
             <img
@@ -83,7 +83,7 @@ export const View = () => {
         </div>
 
         {/* Comment Section */}
-        <div className="w-full md:w-3/4 p-4 bg-white border shadow-lg rounded-md border-gray-300">
+        <div className="w-full md:w-3/4 p-4 bg-white border shadow-lg rounded-md border-gray-300 dark:border-none dark:bg-slate-800">
           <h1 className="mb-5 text-xl">
             {post.relationships.comments!.length > 0
               ? post.relationships.comments?.length + " Comments"
@@ -103,7 +103,7 @@ export const View = () => {
               user.isVerified ? (
                 <form className="w-full" onSubmit={handleSubmit(onComment)}>
                   <textarea
-                    className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300"
+                    className="w-full p-2 max-h-[3rem] rounded-md shadow-lg border border-gray-300 dark:bg-slate-700 dark:border-none"
                     placeholder="Add a comment..."
                     onFocus={() => setEditable(true)}
                     {...register("comment")}
@@ -173,7 +173,7 @@ export const View = () => {
               }
             )
           ) : (
-            <div className="mt-3 border border-gray-300 rounded-md shadow-lg w-full p-2 text-lg">
+            <div className="mt-3 border border-gray-300 rounded-md shadow-lg w-full p-2 text-lg dark:border-none dark:bg-slate-700">
               Be the first one!
             </div>
           )}

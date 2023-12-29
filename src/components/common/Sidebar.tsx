@@ -17,11 +17,11 @@ export const Sidebar = ({
   updateSelectedCategory,
 }: Props) => {
   return (
-    <div className="hidden md:block h-fit sticky top-24 shadow-lg border border-gray-200 rounded-lg w-3/12 p-5 transition ease-in-out">
+    <div className="hidden md:block h-fit sticky top-24 shadow-lg border border-gray-200 rounded-lg w-3/12 p-5 transition ease-in-out dark:border-none dark:bg-slate-800 dark:text-slate-300">
       <Search search={search} updateSearch={updateSearch} />
 
       {/* Divider */}
-      <div className="h-[0.3rem] mx-1 my-4 rounded-md bg-gray-300 shadow-md" />
+      <div className="h-[0.3rem] mx-1 my-4 rounded-md bg-gray-300 shadow-md dark:bg-slate-700" />
 
       <div className="ml-1">
         <h1 className="text-xl my-5">Categories</h1>

@@ -3,7 +3,7 @@ import { RiGithubFill } from "react-icons/ri";
 
 export const Footer = () => {
   return (
-    <footer className="flex bg-white border p-8 shadow-inner justify-between border-gray-300">
+    <footer className="flex bg-white border p-8 shadow-inner justify-between border-gray-300 dark:bg-slate-800 dark:border-none dark:text-slate-300">
       <a className="flex items-center space-x-3" href="#home">
         <img src={reactLogo} alt="logo" />
         <h1>React-Blog</h1>

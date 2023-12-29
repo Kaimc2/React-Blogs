@@ -57,7 +57,7 @@ export const Edit = () => {
           onSubmit={handleSubmit(onSubmit)}
           method="post"
         >
-          <h1 className="text-2xl text-center font-semibold">Add Category</h1>
+          <h1 className="text-2xl text-center font-semibold">Edit Category</h1>
 
           <input
             className="form-field"

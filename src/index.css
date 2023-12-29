@@ -4,7 +4,7 @@
 
 @layer components {
   .form-field {
-    @apply mt-6 py-2 border border-gray-300 pl-4 shadow-lg rounded-md;
+    @apply mt-6 py-2 border border-gray-300 pl-4 shadow-lg rounded-md dark:bg-slate-700 dark:border-none;
   }
 
   .error-field {
@@ -12,7 +12,7 @@
   }
 
   .submit-btn {
-    @apply bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700;
+    @apply bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 dark:bg-blue-700 hover:dark:bg-blue-900;
   }
 
   .loader {
@@ -24,11 +24,11 @@
   }
 
   .blog-none {
-    @apply flex items-center min-h-[5rem] font-semibold w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md;
+    @apply flex items-center min-h-[5rem] font-semibold w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md dark:text-slate-300 dark:border-none dark:bg-slate-800;
   }
 
   .input-field {
-    @apply border border-gray-300 p-2 rounded-lg shadow-md mt-3;
+    @apply border border-gray-300 p-2 rounded-lg shadow-md mt-3 dark:bg-slate-700 dark:border-none;
   }
 
   .paginate-btn {
@@ -44,20 +44,21 @@
   .category-content {
     @apply flex space-x-2 ml-4 relative after:block after:content-[''] after:absolute after:h-[3px] 
           after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition 
-          after:duration-300 after:bottom-0 after:origin-left;
+          after:duration-300 after:bottom-0 after:origin-left dark:after:bg-white;
   }
 
   .category-content > .active {
     @apply relative after:block after:content-[''] after:absolute after:h-[3px] 
           after:bg-black after:w-full after:bottom-0 after:origin-left after:scale-100
+          dark:after:bg-white
   }
 
   .profile-picture {
-    @apply border w-[3rem] h-[3rem] rounded-full;
+    @apply border w-[3rem] h-[3rem] rounded-full dark:border-none;
   }
 
   .post {
-    @apply flex-col w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md relative hover:-translate-y-1 transition-all ease-in-out;
+    @apply flex-col w-11/12 space-y-4 p-4 shadow-xl border border-gray-200 rounded-md relative hover:-translate-y-1 transition-all ease-in-out dark:bg-slate-800 dark:border-none dark:text-slate-300;
   }
 
   .is-active {
@@ -77,14 +78,23 @@
   }
 
   .dashboard {
-    @apply flex flex-col md:flex-row m-5 gap-3 md:h-[78vh];
+    @apply flex flex-col md:flex-row p-5 gap-3 md:h-[82vh] dark:bg-slate-900 dark:text-slate-300;
   }
 
   .dashboard-btn {
-    @apply border border-gray-300 py-2 -translate-y-1 shadow-xl hover:translate-y-0 hover:shadow-none w-full rounded-md transition-all ease-in-out;
+    @apply border border-gray-300 py-2 -translate-y-1 shadow-xl hover:translate-y-0 hover:shadow-none w-full rounded-md transition-all ease-in-out dark:border-none dark:bg-slate-700;
   }
 
   .dashboard-active {
-    @apply border border-gray-300 py-2 translate-y-0 w-full rounded-md;
+    @apply border border-gray-300 py-2 translate-y-0 w-full rounded-md dark:border-none dark:bg-slate-700;
+  }
+
+  .ant-table
+  .ant-table-container
+  .ant-table-content
+  table
+  thead.ant-table-thead
+  .ant-table-cell {
+    @apply dark:bg-slate-700
   }
 }

@@ -23,7 +23,7 @@ import { VerifyEmail } from "./pages/auth/VerifyEmail";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { ResetPassword } from "./pages/auth/ResetPassword";
 
-function App() {
+function App() { 
   return (
     <div id="home" className="h-screen">
       <Router>

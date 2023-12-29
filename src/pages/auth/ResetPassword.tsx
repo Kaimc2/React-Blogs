@@ -58,9 +58,9 @@ export const ResetPassword = () => {
   };
 
   return (
-    <div className="h-[31rem] md:h-[47.5rem] flex justify-center items-center">
+    <div className="h-[31rem] md:h-[47.5rem] flex justify-center items-center dark:bg-slate-900 dark:text-slate-300">
       <form
-        className="w-full flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg"
+        className="w-full flex flex-col border md:w-2/5 p-10 border-gray-200 shadow-lg dark:bg-slate-800 dark:border-none"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="text-2xl text-center font-semibold">Reset password</h1>

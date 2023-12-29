@@ -61,8 +61,8 @@ export const VerifyEmail = () => {
   }, []);
 
   return (
-    <div className="flex h-[81vh] justify-center items-center">
-      <div className="border border-gray-300 p-10 rounded-md flex flex-col items-center">
+    <div className="flex h-[82vh] justify-center items-center dark:bg-slate-900 dark:text-slate-300">
+      <div className="border border-gray-300 p-10 rounded-md flex flex-col items-center dark:border-none dark:bg-slate-800">
         {resendMessage && (
           <div className="w-full bg-blue-500 p-2 rounded text-white">
             {resendMessage}

@@ -64,9 +64,9 @@ export const Register = () => {
   };
 
   return (
-    <div className="h-full md:h-[47.5rem] my-5 md:my-0 flex justify-center items-center">
+    <div className="h-full md:h-[47.5rem] my-5 md:my-0 flex justify-center items-center dark:bg-slate-900 dark:text-slate-300">
       <form
-        className="flex flex-col border w-[26rem] md:w-2/5 p-10 border-gray-200 shadow-lg"
+        className="flex flex-col border w-[26rem] md:w-2/5 p-10 border-gray-200 shadow-lg dark:bg-slate-800 dark:border-none"
         onSubmit={handleSubmit(onRegister)}
       >
         <h1 className="text-2xl text-center font-semibold">Register</h1>
